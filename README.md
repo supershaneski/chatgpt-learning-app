@@ -7,7 +7,8 @@ The application supports Japanese language settings. (日本語対応)
 
 # Description
 
-This is a discussion app that allows you to explore various viewpoints on specific topics. Simply provide a topic, and it will generate multiple responses based on different perspectives, enabling you to learn and understand various views. You can customize the attributes of each point of view or character. 
+This app aims to be a learning hub to aid students in their subjects.
+By providing topics from their actual course syllabus, the user can interact with the AI chatbot tutor and enagage in dynamic conversations related to the topics. Ask questions, explore concepts and receive detailed explanations. User can learn at their own pace using this app.
 
 # Stack
 
@@ -28,96 +29,40 @@ This is a discussion app that allows you to explore various viewpoints on specif
 * [Material UI](npm install @mui/material @emotion/react @emotion/styled
 ), React components library
 
-```sh
-$ npm install @mui/material @emotion/react @emotion/styled
-```
+  ```sh
+  $ npm install @mui/material @emotion/react @emotion/styled
+  ```
 
-Roboto font
+  Roboto font
 
-```sh
-$ npm install @fontsource/roboto
-```
+  ```sh
+  $ npm install @fontsource/roboto
+  ```
 
-Icons
+  Icons
 
-```sh
-$ npm install @mui/icons-material
-```
+  ```sh
+  $ npm install @mui/icons-material
+  ```
 
 * [Zustand](https://github.com/pmndrs/zustand), global app state management and also using the [persisting store data](https://docs.pmnd.rs/zustand/integrations/persisting-store-data) as simple database
 
-```sh
-$ npm install zustand
-```
+  ```sh
+  $ npm install zustand
+  ```
 
-# App
-
-Sample screenshot
-
-<picture>
-  <source media="(prefers-color-scheme: light)" srcset="./docs/screenshot02.jpeg">
-  <source media="(prefers-color-scheme: dark)" srcset="./docs/screenshot12.jpeg">
-  <img alt="Screenshot" src="./docs/story1.jpeg">
-</picture>
-
-Character list
-
-<picture>
-  <source media="(prefers-color-scheme: light)" srcset="./docs/screenshot01.jpeg">
-  <source media="(prefers-color-scheme: dark)" srcset="./docs/screenshot11.jpeg">
-  <img alt="Settings" src="./docs/story2.jpeg">
-</picture>
-
-# Custom Sample
-
-Simulated discussion between characters from a galaxy far, far away
-
-<picture>
-  <source media="(prefers-color-scheme: light)" srcset="./docs/screenshot03.jpeg">
-  <source media="(prefers-color-scheme: dark)" srcset="./docs/screenshot13.jpeg">
-  <img alt="Screenshot" src="./docs/story3.jpeg">
-</picture>
-
-Character list
-
-<picture>
-  <source media="(prefers-color-scheme: light)" srcset="./docs/screenshot04.jpeg">
-  <source media="(prefers-color-scheme: dark)" srcset="./docs/screenshot14.jpeg">
-  <img alt="Settings" src="./docs/story4.jpeg">
-</picture>
-
-# Another Custom Sample - Japanese / 日本語
-
-Simulated discussion between known figures of Japan's Bakumatsu period.
-
----
-
-日本幕末期の著名な人物による模擬討論。
-
-<picture>
-  <source media="(prefers-color-scheme: light)" srcset="./docs/screenshot05.jpeg">
-  <source media="(prefers-color-scheme: dark)" srcset="./docs/screenshot15.jpeg">
-  <img alt="Screenshot" src="./docs/story5.jpeg">
-</picture>
-
-Character list
-
----
-
-登場人物一覧
-
-<picture>
-  <source media="(prefers-color-scheme: light)" srcset="./docs/screenshot06.jpeg">
-  <source media="(prefers-color-scheme: dark)" srcset="./docs/screenshot16.jpeg">
-  <img alt="Settings" src="./docs/story6.jpeg">
-</picture>
+* [OpenAI](https://github.com/openai/openai-node#readme), OpenAI Node.JS library to access OpenAI APIs
+  
+  ```sh
+  $ npm install openai
+  ```
 
 # Setup
 
 Clone the repository and install the dependencies
 
 ```sh
-git clone https://github.com/supershaneski/discussion-app.git myproject
+git clone https://github.com/supershaneski/chatgpt-learning-app.git myproject
 
 cd myproject
 
