@@ -1,0 +1,35 @@
+{
+  "name": "chatgpt-learning-app",
+  "version": "0.0.1",
+  "description": "A sample React app built using Next.js powered by OpenAI ChatGPT API",
+  "scripts": {
+    "dev": "next dev -p 3008",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.0",
+    "@emotion/styled": "^11.11.0",
+    "@fontsource/roboto": "^5.0.1",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.13.2",
+    "next": "^13.4.4",
+    "openai": "^3.2.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "zustand": "^4.3.8"
+  },
+  "devDependencies": {
+    "@storybook/addon-essentials": "^7.0.17",
+    "@storybook/addon-interactions": "^7.0.17",
+    "@storybook/addon-links": "^7.0.17",
+    "@storybook/blocks": "^7.0.17",
+    "@storybook/nextjs": "^7.0.17",
+    "@storybook/react": "^7.0.17",
+    "@storybook/testing-library": "^0.0.14-next.2",
+    "storybook": "^7.0.17"
+  }
+}
