@@ -5,6 +5,7 @@ const useDataStore = create(
     persist(
         (set, get) => ({
             data: [],
+            courses: [],
             add: (item) => {
 
                 let data = get().data.slice(0)
@@ -14,6 +15,14 @@ const useDataStore = create(
 
             },
             clear: () => set({ data: [] }),
+            addCourse: (item) => {
+
+                let courses = get().course.slice(0)
+                courses.push(item)
+
+                set({ courses })
+
+            }
         }),
         {
             name: "chatgpt-learning-data-storage",

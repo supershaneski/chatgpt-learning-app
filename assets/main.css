@@ -1,5 +1,5 @@
 :root {
-    --vt-c-white: #ffffff;
+    --vt-c-white: #f5f5f5; /*ffffff*/
     --vt-c-black: #181818;
     --vt-c-text-light-1: #2c3e50;
     --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
