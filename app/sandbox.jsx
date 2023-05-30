@@ -2,6 +2,8 @@
 
 import React from 'react'
 
+import { createPortal } from 'react-dom'
+
 import Link from 'next/link'
 
 /*
@@ -21,38 +23,95 @@ import { getSimpleId } from '../lib/utils'
 //import useDataStore from '../store/datastore'
 */
 
+import useDataStore from '../store/datastore'
+
+import DialogSubject from '../components/dialogsubject'
+
+import { getSimpleId } from '../lib/utils'
+
+import categoryList from '../assets/category.json'
+
 import classes from './sandbox.module.css'
+
+function getCategoryName(id) {
+    return categoryList.items.find((item) => item.id === id)?.name
+}
 
 export default function Sandbox() {
 
+    const subjects = useDataStore((state) => state.courses)
+    const addSubject = useDataStore((state) => state.addCourse)
+
+    const [subjectItems, setSubjectItems] = React.useState([])
+    const [openAdd, setOpenAdd] = React.useState(false)
+
+    React.useEffect(() => {
+
+        setSubjectItems(subjects)
+
+    }, [])
+
+    const handleAddSubject = (category, name, description) => {
+
+        const newSubject = {
+            id: getSimpleId(),
+            category,
+            name,
+            description,
+        }
+
+        addSubject(newSubject)
+
+        setSubjectItems((prev) => [...prev, ...[newSubject]])
+
+        setOpenAdd(false)
+
+    }
+
+    const handleOpenAdd = () => {
+        setOpenAdd(true)
+    }
+
+    const handleCloseAdd = () => {
+        setOpenAdd(false)
+    }
 
     return (
         <div className={classes.container}>
             <div className={classes.header}>
-                <button className={classes.button}>Add Subject</button>
+                <button className={classes.button} onClick={handleOpenAdd}><span className={classes.icon}>&#43;</span> Add Subject</button>
             </div>
             <div className={classes.main}>
                 <ul className={classes.list}>
-                    <li className={classes.item}>
-                        <Link className={classes.link} href={`/course/abc0123`}>
-                            <div className={classes.course}>
-                                <div className={classes.category}>Category</div>
-                                <div className={classes.name}>CS50 Introduction to Programming with Scratch</div>
-                                <div className={classes.description}>A gentle introduction to programming that prepares you for subsequent courses in coding.</div>
-                            </div>
-                        </Link>
-                    </li>
-                    <li className={classes.item}>
-                        <Link className={classes.link} href={`/course/xyz5289`}>
-                            <div className={classes.course}>
-                                <div className={classes.category}>Computer Science</div>
-                                <div className={classes.name}>Introduction to Data Science with Python</div>
-                                <div className={classes.description}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-                            </div>
-                        </Link>
-                    </li>
+                {
+                    subjectItems.map((item) => {
+                        console.log('id', item.id)
+                        return (
+                            <li key={item.id} className={classes.item}>
+                                <Link className={classes.link} href={`/course/${item.id}`}>
+                                    <div className={classes.course}>
+                                        <div className={classes.category}>{ getCategoryName(item.category) }</div>
+                                        <div className={classes.name}>{ item.name }</div>
+                                        <div className={classes.description}>{ item.description }</div>
+                                    </div>
+                                </Link>
+                            </li>
+                        )
+                    })
+                }
                 </ul>
             </div>
+            {
+                openAdd && createPortal(
+                    <DialogSubject 
+                    dialogTitle='Add Subject'
+                    buttonTitle='Add'
+                    onConfirm={handleAddSubject} 
+                    onClose={handleCloseAdd} 
+                    />, 
+                    document.body
+                )
+            }
         </div>
     )
 }

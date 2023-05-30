@@ -16,8 +16,10 @@
     z-index: 10;
     color: #ffffff;
     display: flex;
+    justify-content: flex-end;
     align-items: center;
     padding: 0 1rem;
+    box-sizing: border-box;
 }
 
 .main {
@@ -35,7 +37,7 @@
 }
 
 .item {
-    width: 50%;
+    width: calc(100%/3);
     flex-shrink: 0;
 }
 
@@ -43,8 +45,8 @@
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     background-color: #ffffff;
     margin: 1rem;
-    padding: 1rem;
-    height: 200px;
+    padding: 2rem;
+    height: 125px;
 }
 
 .category {
@@ -85,12 +87,18 @@
     border-width: 0;
     border-radius: 3px;
 }
+.icon {
+    font-size: 1rem;
+}
+
+@media only screen and (max-width: 850px) {
+    .item {
+        width: 50%;
+    }
+}
 
 @media only screen and (max-width: 600px) {
     .item {
         width: 100%;
-    }
-    .course {
-        height: 200px;
     }
 }

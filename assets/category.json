@@ -1,0 +1,9 @@
+{
+    "items": [
+        { "id": "cat0001", "name": "General Education" },
+        { "id": "cat0002", "name": "Science" },
+        { "id": "cat0003", "name": "Mathematics" },
+        { "id": "cat0004", "name": "Computer Science" },
+        { "id": "cat0005", "name": "Engineering" }
+    ]
+}

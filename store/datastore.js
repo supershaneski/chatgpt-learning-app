@@ -6,6 +6,7 @@ const useDataStore = create(
         (set, get) => ({
             data: [],
             courses: [],
+            topics: [],
             add: (item) => {
 
                 let data = get().data.slice(0)
@@ -17,10 +18,18 @@ const useDataStore = create(
             clear: () => set({ data: [] }),
             addCourse: (item) => {
 
-                let courses = get().course.slice(0)
+                let courses = get().courses.slice(0)
                 courses.push(item)
 
                 set({ courses })
+
+            },
+            addTopics: (item) => {
+
+                let topics = get().topics.slice(0)
+                topics.push(item)
+
+                set({ topics })
 
             }
         }),
