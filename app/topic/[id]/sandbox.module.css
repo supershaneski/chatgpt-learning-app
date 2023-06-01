@@ -1,0 +1,183 @@
+.container {
+    position: relative;
+}
+
+.header {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background-color: #2a3451;
+    position: relative;
+    padding: 0 1rem;
+    box-sizing: border-box;
+}
+
+.toolbar {
+    position: relative;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.banner {
+    position: relative;
+    padding: 0 10px 2rem 10px;
+    box-sizing: border-box;
+}
+
+.headerTitle, .headerText {
+    margin: 0;
+    color: #fff;
+}
+
+.headerTitle {
+    font-size: 1.8rem;
+    font-weight: 400;
+    line-height: 140%;
+    margin-bottom: 1rem;
+}
+.headerText {
+    font-size: 1rem;
+    font-weight: 400;
+    display: -webkit-box;
+    max-width: calc(100% - 2rem);
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.inputbar {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background-color: #fff;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 10;
+}
+.chat {
+    margin: 1rem;
+}
+
+.topic {
+    position: relative;
+    padding: 2rem;
+}
+.topicContent {
+    border: 1px solid #d5d0ca;
+    background-color: #ffffff;
+    position: relative;
+    padding: 2rem;
+}
+.topicTopic {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+.topicSubTopic {
+    margin-top: 1rem;
+}
+
+.buttonGroup {
+    margin-top: 2rem;
+}
+.button {
+    background-color: #a41034;
+    appearance: none;
+    min-width: 180px;
+    min-height: 50px;
+    font-size: 1rem;
+    text-transform: uppercase;
+    color: #ffffff;
+    border-width: 0;
+    border-radius: 3px;
+}
+.button {
+    margin-right: 1rem;
+}
+.button:last-child {
+    margin-right: 0;
+}
+.icon {
+    font-size: 1rem;
+}
+
+.quiz {
+    /*background-color: #e6e6ee;*/
+    position: relative;
+    padding: 0 2rem 6rem 2rem;
+}
+.quizContent {
+    border: 1px solid #d5d0ca;
+    background-color: #ffffff;
+    position: relative;
+    padding: 2rem;
+}
+.questionItem {
+    position: relative;
+    margin-bottom: 1rem;
+}
+.questionItem:last-child {
+    margin-bottom: 0;
+}
+.questionText {
+    margin: 0;
+}
+.quizAction {
+    padding-top: 2rem;
+    display: flex;
+    justify-content: center;
+}
+.quizResult {
+    position: relative;
+    margin-top: 2rem;
+}
+.quizResultText {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+.quizResultMessage {
+    margin: 0;
+}
+
+.discussion {
+    position: relative;
+    padding: 0 2rem 6rem 2rem;
+}
+.message {
+    position: relative;
+    border-radius: 6px;
+    /*border: 1px solid #d5d0ca;*/
+    background-color: #d5d0ca;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+.message:last-child {
+    margin-bottom: 0;
+}
+.message:nth-child(even) {
+    background-color: #fff;
+}
+.messageText {
+    margin: 0;
+    white-space: pre-wrap;
+}
+.close {
+    /*border: 1px solid #2a3451;*/
+    background-color: #a3a0a2;
+    border-radius: 50%;
+    position: absolute;
+    right: -8px;
+    top: -8px;
+    width: 20px;
+    height: 20px;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    line-height: 100%;
+    box-sizing: border-box;
+    color: #fff;
+    display: none;
+}
+.message:hover .close {
+    display: flex;
+}

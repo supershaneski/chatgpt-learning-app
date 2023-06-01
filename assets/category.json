@@ -4,6 +4,7 @@
         { "id": "cat0002", "name": "Science" },
         { "id": "cat0003", "name": "Mathematics" },
         { "id": "cat0004", "name": "Computer Science" },
-        { "id": "cat0005", "name": "Engineering" }
+        { "id": "cat0005", "name": "Engineering" },
+        { "id": "cat0006", "name": "History" }
     ]
 }

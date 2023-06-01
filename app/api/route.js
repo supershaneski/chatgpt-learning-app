@@ -12,11 +12,11 @@ export async function POST(request) {
         })
     }
 
-    if (!inquiry) {
+    /*if (!inquiry) {
         return new Response('Bad question', {
             status: 400,
         })
-    }
+    }*/
 
     if (!Array.isArray(previous)) {
         return new Response('Bad chunks', {
@@ -47,7 +47,10 @@ export async function POST(request) {
         ]
 
         messages = messages.concat(prev_data)
-        messages.push({ role: 'user', content: inquiry })
+        
+        if(inquiry.length > 0) {
+            messages.push({ role: 'user', content: inquiry })
+        }
 
         text = await chatCompletion({
             messages,

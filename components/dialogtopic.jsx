@@ -13,76 +13,52 @@ import InputLabel from '@mui/material/InputLabel'
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 import Divider from '@mui/material/Divider'
-import ClearIcon from '@mui/icons-material/Clear'
+import ClearIcon from '@mui/icons-material/Clear';
 
 import categoryList from '../assets/category.json'
 
-import classes from './dialogsubject.module.css'
+import classes from './dialogtopic.module.css'
 
-function DialogSubject({
-    icon = null,
+function DialogTopic({
     dialogTitle = '',
     buttonTitle = '',
-    defaultCategory = 'cat0001',
-    defaultName = '',
-    defaultDescription = '',
+    //defaultCategory = 'cat0001',
+    //defaultName = '',
+    //defaultDescription = '',
+    id = '',
+    defaultTopic = '',
+    defaultSubTopic = '',
     onConfirm = undefined,
     onClose = undefined,
 }) {
 
-    const [category, setCategory] = React.useState(defaultCategory)
-    const [name, setName] = React.useState(defaultName)
-    const [description, setDescription] = React.useState(defaultDescription)
+    //const [category, setCategory] = React.useState(defaultCategory)
+
+    const [topic, setTopic] = React.useState(defaultTopic)
+    const [subTopics, setSubTopics] = React.useState(defaultSubTopic)
 
     return (
         <div className={classes.container}>
             <div className={classes.dialog}>
                 <div className={classes.header}>
-                    {
-                        icon &&
-                        <>
-                        { icon }&nbsp;<h4 className={classes.title}>{ dialogTitle }</h4>
-                        </>
-                        
-                    }
-                    {
-                        !icon &&
-                        <h4 className={classes.title}>{ dialogTitle }</h4>
-                    }
+                    <h4 className={classes.title}>{ dialogTitle }</h4>
                 </div>
                 <div className={classes.main}>
-                    <div className={classes.category}>
-                        <FormControl 
-                        //fullWidth
-                        >
-                            <InputLabel id="icon-label">Category</InputLabel>
-                            <Select
-                            labelId="icon-label"
-                            label="Category"
-                            value={category}
-                            onChange={(e) => setCategory(e.target.value)}
-                            >
-                                {
-                                    categoryList.items.map((item) => <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>)
-                                }
-                            </Select>
-                        </FormControl>
-                    </div>
                     <div className={classes.name}>
                         <FormControl fullWidth>
                             <TextField
                             fullWidth
                             required
-                            label='Name'
-                            placeholder={`Enter Subject Name...`}
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
+                            label='Topic'
+                            placeholder={`Enter Topic...`}
+                            value={topic}
+                            onChange={(e) => setTopic(e.target.value)}
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">
                                         <IconButton
-                                        disabled={name.length === 0}
-                                        onClick={() => setName('')}
+                                        disabled={topic.length === 0}
+                                        onClick={() => setTopic('')}
                                         >
                                             <ClearIcon />
                                         </IconButton>
@@ -97,19 +73,19 @@ function DialogSubject({
                             <TextField
                             fullWidth
                             //required
-                            label='Description'
-                            placeholder={`Enter Subject Description...`}
-                            value={description}
+                            label='SubTopics'
+                            placeholder={`Enter SubTopics...`}
+                            value={subTopics}
                             multiline
                             rows={3}
                             maxRows={3}
-                            onChange={(e) => setDescription(e.target.value)}
+                            onChange={(e) => setSubTopics(e.target.value)}
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">
                                         <IconButton
-                                        disabled={description.length === 0}
-                                        onClick={() => setDescription('')}
+                                        disabled={subTopics.length === 0}
+                                        onClick={() => setSubTopics('')}
                                         >
                                             <ClearIcon />
                                         </IconButton>
@@ -122,10 +98,13 @@ function DialogSubject({
                 </div>
                 <div className={classes.action}>
                     <Button 
-                    disabled={name.length === 0}
-                    onClick={() => onConfirm(category, name, description)} variant='outlined' 
+                    disabled={topic.length === 0}
+                    onClick={() => onConfirm(id, topic, subTopics)} 
+                    variant='outlined' 
                     sx={{width: '120px', mr: 1}}>{buttonTitle}</Button>
-                    <Button onClick={() => onClose()} variant='outlined' 
+                    <Button 
+                    onClick={() => onClose()} 
+                    variant='outlined' 
                     sx={{width: '120px'}}>Close</Button>
                 </div>
             </div>
@@ -133,11 +112,7 @@ function DialogSubject({
     )
 }
 
-DialogSubject.propTypes = {
-    /**
-     * icon object
-     */
-    icon: PropTypes.element,
+DialogTopic.propTypes = {
     /**
      * dialogTitle string
      */
@@ -147,17 +122,17 @@ DialogSubject.propTypes = {
      */
     buttonTitle: PropTypes.string,
     /**
-     * defaultCategory string
+     * id string
      */
-    defaultCategory: PropTypes.string,
+    id: PropTypes.string,
     /**
-     * defaultName string
+     * defaultTopic string
      */
-    defaultName: PropTypes.string,
+    defaultTopic: PropTypes.string,
     /**
-     * defaultDescription
+     * defaultSubTopic
      */
-    defaultDescription: PropTypes.string,
+    defaultSubTopic: PropTypes.string,
     /**
      * onConfirm handler
      */
@@ -168,4 +143,4 @@ DialogSubject.propTypes = {
     onClose: PropTypes.func,
 }
 
-export default DialogSubject
+export default DialogTopic
