@@ -17,6 +17,9 @@ import ClearIcon from '@mui/icons-material/Clear'
 
 import categoryList from '../assets/category.json'
 
+import captions from '../assets/captions.json'
+import useCaption from '../lib/usecaption';
+
 import classes from './dialogsubject.module.css'
 
 function DialogSubject({
@@ -29,6 +32,8 @@ function DialogSubject({
     onConfirm = undefined,
     onClose = undefined,
 }) {
+
+    const setCaption = useCaption(captions)
 
     const [category, setCategory] = React.useState(defaultCategory)
     const [name, setName] = React.useState(defaultName)
@@ -55,10 +60,10 @@ function DialogSubject({
                         <FormControl 
                         //fullWidth
                         >
-                            <InputLabel id="icon-label">Category</InputLabel>
+                            <InputLabel id="icon-label">{setCaption('category')}</InputLabel>
                             <Select
                             labelId="icon-label"
-                            label="Category"
+                            label={setCaption('category')}
                             value={category}
                             onChange={(e) => setCategory(e.target.value)}
                             >
@@ -73,8 +78,8 @@ function DialogSubject({
                             <TextField
                             fullWidth
                             required
-                            label='Name'
-                            placeholder={`Enter Subject Name...`}
+                            label={setCaption('subject-name')}
+                            placeholder={setCaption('placeholder-name')}
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             InputProps={{
@@ -97,8 +102,8 @@ function DialogSubject({
                             <TextField
                             fullWidth
                             //required
-                            label='Description'
-                            placeholder={`Enter Subject Description...`}
+                            label={setCaption('description')}
+                            placeholder={setCaption('placeholder-description')}
                             value={description}
                             multiline
                             rows={3}
@@ -126,7 +131,7 @@ function DialogSubject({
                     onClick={() => onConfirm(category, name, description)} variant='outlined' 
                     sx={{width: '120px', mr: 1}}>{buttonTitle}</Button>
                     <Button onClick={() => onClose()} variant='outlined' 
-                    sx={{width: '120px'}}>Close</Button>
+                    sx={{width: '120px'}}>{setCaption('close')}</Button>
                 </div>
             </div>
         </div>

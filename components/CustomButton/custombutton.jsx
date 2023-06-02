@@ -2,19 +2,21 @@
 
 import { styled } from '@mui/material/styles';
 import Button, { ButtonProps } from '@mui/material/Button';
+import AddIcon from '@mui/icons-material/Add'
 import Stack from '@mui/material/Stack';
 import { purple } from '@mui/material/colors';
 
 const ColorButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText('#006085'),//purple[500]
-    backgroundColor: '#006085', //500
+    backgroundColor: '#a41034', //'#006085', //500
     '&:hover': {
-      backgroundColor: '#00979d', //700
+      backgroundColor: '#ea2e5d', //'#00979d', //700
     },
 }));
 
-export default function CustomButton() {
+export default function CustomButton(props) {
     return (
-        <ColorButton variant="contained" disableElevation>Button A</ColorButton>
+        <ColorButton onClick={props.onClick} startIcon={<AddIcon />} variant="contained" disableElevation sx={{padding: '10px 40px', borderRadius: '3px', fontSize: '1rem', fontWeight: '400'}}>
+        {props.children}</ColorButton>
     )
 }

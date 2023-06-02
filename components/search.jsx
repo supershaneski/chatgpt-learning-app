@@ -6,17 +6,14 @@ import PropTypes from 'prop-types'
 
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import NoSsr from '@mui/base/NoSsr'
-
-import FormControl from '@mui/material/FormControl'
 import IconButton from '@mui/material/IconButton'
-import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import InputAdornment from '@mui/material/InputAdornment'
-import ClearIcon from '@mui/icons-material/Clear'
 import SearchIcon from '@mui/icons-material/Search'
 
-import classes from './search.module.css'
+import captions from '../assets/captions.json'
+import useCaption from '../lib/usecaption'
 
 const darkTheme = createTheme({
     palette: {
@@ -25,25 +22,38 @@ const darkTheme = createTheme({
 })
 
 function Search({
-    onSearch = () => {},
+    onSearch = undefined,
 }) {
     
+    const setCaption = useCaption(captions)
+
+    const inputRef = React.useRef()
+
     const [searchText, setSearchText] = React.useState('')
 
-    const handleSearch = () => {
+    const handleSearch = (e) => {
+        e.preventDefault()
+
         onSearch(searchText)
         setSearchText('')
+
+        inputRef.current.blur()
     }
 
     return (
         <NoSsr>
             <ThemeProvider theme={darkTheme}>
-                <FormControl>
+                <Box
+                component="form" 
+                onSubmit={handleSearch}
+                noValidate
+                >
                     <TextField
                     //fullWidth
                     //required
                     //label='Search'
-                    placeholder={`Search`}
+                    ref={inputRef}
+                    placeholder={setCaption('search')}
                     value={searchText}
                     onChange={(e) => setSearchText(e.target.value)}
                     InputProps={{
@@ -61,7 +71,7 @@ function Search({
                         ),
                     }}
                     />
-                </FormControl>
+                </Box>
             </ThemeProvider>
         </NoSsr>
     )

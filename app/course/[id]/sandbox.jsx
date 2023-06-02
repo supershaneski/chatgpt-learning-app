@@ -13,6 +13,8 @@ import SettingsIcon from '@mui/icons-material/Settings'
 import HomeIcon from '@mui/icons-material/Home'
 import EditIcon from '@mui/icons-material/Edit'
 
+import CustomButton from '../../../components/CustomButton'
+
 import DialogSubject from '../../../components/dialogsubject'
 import DialogTopic from '../../../components/dialogtopic'
 
@@ -167,6 +169,11 @@ export default function Sandbox({
 
     }
 
+    /*
+    <button 
+                    onClick={handleShowAddTopic} 
+                    className={classes.button}><span className={classes.icon}>&#43;</span> Add Topic</button>
+    */
     return (
         <div className={classes.container}>
             <div className={classes.header}>
@@ -185,9 +192,9 @@ export default function Sandbox({
                 <div className={classes.banner}>
                     <h1 className={classes.headerTitle}>{ courseName }</h1>
                     <p className={classes.headerText}>{ courseDescription }</p>
-                    <button 
+                    <CustomButton
                     onClick={handleShowAddTopic} 
-                    className={classes.button}><span className={classes.icon}>&#43;</span> Add Topic</button>
+                    >Add Topic</CustomButton>
                 </div>
             </div>
             <div className={classes.main}>
@@ -241,7 +248,7 @@ export default function Sandbox({
                     <DialogSubject
                     icon={<SettingsIcon />}
                     dialogTitle='Edit Subject'
-                    buttonTitle='Edit'
+                    buttonTitle='Save'
                     defaultCategory={courseCategory}
                     defaultName={courseName}
                     defaultDescription={courseDescription}
@@ -255,7 +262,7 @@ export default function Sandbox({
                 openAddTopic && createPortal(
                     <DialogTopic
                     dialogTitle={topicDialogMode > 0 ? 'Edit Topic' : 'Add Topic'}
-                    buttonTitle={topicDialogMode > 0 ? 'Edit' : 'Add'}
+                    buttonTitle={topicDialogMode > 0 ? 'Save' : 'Add'}
                     //defaultCategory={courseCategory}
                     //defaultName={courseName}
                     //defaultDescription={courseDescription}

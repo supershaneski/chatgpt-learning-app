@@ -1,0 +1,49 @@
+.course {
+    position: relative;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background-color: #ffffff;
+    margin: 1rem;
+    padding: 2rem;
+    height: 150px;
+}
+.category {
+    font-size: .8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #68686F;
+    margin-bottom: .5rem;
+    z-index: 1;
+}
+.name {
+    color: #a41034;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: .5rem;
+    z-index: 1;
+}
+.description {
+    font-size: .9rem;
+    display: -webkit-box;
+    max-width: calc(100% - 2rem);
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    color: var(--color-text);
+    z-index: 1;
+}
+.delete {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    z-index: 5;
+    display: none;
+}
+.course:hover .delete {
+    display: block;
+}
+.add {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
