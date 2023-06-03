@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation'
 import Chip from '@mui/material/Chip'
 //import Button from '@mui/material/Button'
 import AddIcon from '@mui/icons-material/Add'
+import DeleteIcon from '@mui/icons-material/DeleteForever'
 
 import Dialog from '../components/dialog'
 import DialogSubject from '../components/dialogsubject'
@@ -38,6 +39,7 @@ export default function Sandbox() {
 
     const subjects = useDataStore((state) => state.courses)
     const addSubject = useDataStore((state) => state.addCourse)
+    const deleteSubject = useDataStore((state) => state.deleteCourse)
 
     const [subjectItems, setSubjectItems] = React.useState([])
     const [searchText, setSearchText] = React.useState('')
@@ -45,6 +47,7 @@ export default function Sandbox() {
     const [openAdd, setOpenAdd] = React.useState(false)
     const [openDialog, setOpenDialog] = React.useState(false)
     const [openLoader, setOpenLoader] = React.useState(false)
+    const [paramId, setParamId] = React.useState('')
     
     React.useEffect(() => {
 
@@ -86,7 +89,20 @@ export default function Sandbox() {
     }
 
     const handleCourseDelete = (id) => {
-        //
+        setParamId(id)
+        setOpenDialog(true)
+    }
+
+    const handleDelete = (id) => {
+        
+        deleteSubject(id)
+
+        setSubjectItems((prev) => {
+            return prev.slice(0).filter((item) => item.id !== id)
+        })
+
+        setOpenDialog(false)
+
     }
 
     const handleSearch = (key) => {
@@ -121,7 +137,7 @@ export default function Sandbox() {
                                 <CourseItem
                                 onDelete={() => handleCourseDelete(item.id)}
                                 onClick={() => handleCourseClick(item.id)}
-                                category={getCategoryName(item.category)}
+                                category={setCaption(getCategoryName(item.category))}
                                 name={item.name}
                                 description={item.description}
                                 />
@@ -149,8 +165,11 @@ export default function Sandbox() {
             {
                 openDialog && createPortal(
                     <Dialog
-                    caption='Do you want to delete this subject?'
-                    onConfirm={() => setOpenDialog(false)}
+                    param={paramId}
+                    icon={<DeleteIcon sx={{fontSize: '1.1rem', marginRight: '5px'}} />}
+                    title={setCaption('dialog-delete-title')}
+                    caption={setCaption('dialog-delete-text')}
+                    onConfirm={handleDelete}
                     onClose={() => setOpenDialog(false)}
                     />,
                     document.body

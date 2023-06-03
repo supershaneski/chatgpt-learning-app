@@ -1,5 +1,7 @@
 .container {
     position: relative;
+    height: 100vh;
+    overflow-y: auto;
 }
 
 .header {
@@ -62,23 +64,51 @@
     position: relative;
     padding: 2rem;
 }
+.topicParent {
+    position: relative;
+    margin-bottom: 1.5rem;
+    z-index: 1;
+}
+.linkURL {
+    font-size: 1.2rem;
+    color: #a41034aa; /*#154d84; /*#19599a; /*#2278cf;*/
+    text-decoration: none;
+}
+.linkURL::after {
+    content: '>'; /*'\276F';*/
+    margin-left: 8px;
+}
+.linkURL:hover {
+    color: #a41034; /*#2278cf;*/
+}
 .topicContent {
     border: 1px solid #d5d0ca;
     background-color: #ffffff;
     position: relative;
-    padding: 2rem;
+    padding: 2rem 2rem 1rem 2rem;
+    z-index: 1;
 }
 .topicTopic {
-    font-size: 1.1rem;
+    position: relative;
+    color: #a41034;
+    font-size: 1.5rem;
     font-weight: 500;
+    z-index: 1;
 }
 .topicSubTopic {
+    position: relative;
     margin-top: 1rem;
+    font-size: 1.2rem;
 }
-
 .buttonGroup {
     margin-top: 2rem;
 }
+.editButton {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
 .button {
     background-color: #a41034;
     appearance: none;
@@ -160,24 +190,47 @@
 .messageText {
     margin: 0;
     white-space: pre-wrap;
+    font-size: 1.2rem;
 }
 .close {
     /*border: 1px solid #2a3451;*/
-    background-color: #a3a0a2;
-    border-radius: 50%;
+    /*background-color: #a3a0a2;*/
+    /*border-radius: 50%;*/
     position: absolute;
-    right: -8px;
-    top: -8px;
-    width: 20px;
-    height: 20px;
+    /*right: -8px;
+    top: -8px;*/
+    right: 3px;
+    top: 3px;
+    /*width: 20px;
+    height: 20px;*/
     align-items: center;
     justify-content: center;
-    font-size: 16px;
-    line-height: 100%;
+    /*font-size: 16px;
+    line-height: 100%;*/
     box-sizing: border-box;
     color: #fff;
     display: none;
+    cursor: pointer;
 }
 .message:hover .close {
     display: flex;
+}
+
+.chatInput {
+    font-size: 1.2rem;
+}
+
+@media only screen and (max-width: 1024px) {
+    .topicTopic {
+        font-size: 1.2rem;
+    }
+    .topicSubTopic {
+        font-size: 1rem;
+    }
+    .messageText {
+        font-size: 1rem;
+    }
+    .chatInput {
+        font-size: 1rem;
+    }
 }

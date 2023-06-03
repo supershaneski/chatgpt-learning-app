@@ -62,13 +62,14 @@ function DialogSubject({
                         >
                             <InputLabel id="icon-label">{setCaption('category')}</InputLabel>
                             <Select
+                            sx={{minWidth: '120px'}}
                             labelId="icon-label"
                             label={setCaption('category')}
                             value={category}
                             onChange={(e) => setCategory(e.target.value)}
                             >
                                 {
-                                    categoryList.items.map((item) => <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>)
+                                    categoryList.items.map((item) => <MenuItem key={item.id} value={item.id}>{setCaption(item.name)}</MenuItem>)
                                 }
                             </Select>
                         </FormControl>
@@ -82,6 +83,9 @@ function DialogSubject({
                             placeholder={setCaption('placeholder-name')}
                             value={name}
                             onChange={(e) => setName(e.target.value)}
+                            inputProps={{
+                                maxLength: 128,
+                            }}
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">
@@ -100,6 +104,9 @@ function DialogSubject({
                     <div className={classes.name}>
                         <FormControl fullWidth>
                             <TextField
+                            inputProps={{
+                                maxLength: 256,
+                            }}
                             fullWidth
                             //required
                             label={setCaption('description')}
@@ -107,7 +114,7 @@ function DialogSubject({
                             value={description}
                             multiline
                             rows={3}
-                            maxRows={3}
+                            //maxRows={3}
                             onChange={(e) => setDescription(e.target.value)}
                             InputProps={{
                                 endAdornment: (
@@ -128,9 +135,12 @@ function DialogSubject({
                 <div className={classes.action}>
                     <Button 
                     disabled={name.length === 0}
-                    onClick={() => onConfirm(category, name, description)} variant='outlined' 
+                    onClick={() => onConfirm(category, name, description)} 
+                    variant='outlined' 
                     sx={{width: '120px', mr: 1}}>{buttonTitle}</Button>
-                    <Button onClick={() => onClose()} variant='outlined' 
+                    <Button 
+                    onClick={() => onClose()} 
+                    variant='outlined' 
                     sx={{width: '120px'}}>{setCaption('close')}</Button>
                 </div>
             </div>

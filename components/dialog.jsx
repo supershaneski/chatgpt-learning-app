@@ -19,8 +19,9 @@ import useCaption from '../lib/usecaption'
 export default function Dialog({ 
     title = '',
     caption = '',
-    status = 0,
+    status = 1,
     param = null,
+    icon = null,
     onConfirm = undefined,
     onClose = undefined,
     onStatus = undefined,
@@ -53,11 +54,19 @@ export default function Dialog({
                 {
                     title &&
                     <div className={classes.header}>
+                        {
+                            icon &&
+                            <React.Fragment>
+                                {
+                                    icon
+                                }
+                            </React.Fragment>
+                        }
                         <CustomTheme>
                             <Typography 
                             variant='h4' 
                             component='h4' 
-                            sx={{fontSize: '1.1rem', fontWeight: '500', }}>{ title }</Typography>
+                            sx={{fontSize: '1rem', fontWeight: '500', }}>{ title }</Typography>
                         </CustomTheme>
                     </div>
                 }
@@ -96,6 +105,10 @@ export default function Dialog({
 }
 
 Dialog.propTypes = {
+    /**
+     * icon element
+     */
+    icon: PropTypes.element,
     /**
      * Param property
      */

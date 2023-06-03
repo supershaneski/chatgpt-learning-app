@@ -5,12 +5,13 @@ import React from 'react'
 import { createPortal } from 'react-dom'
 
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
+//import FormLabel from '@mui/material/FormLabel';
 
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
@@ -21,6 +22,7 @@ import SendIcon from '@mui/icons-material/Send'
 //import ChatIcon from '@mui/icons-material/ChatBubbleOutline'
 import QuizIcon from '@mui/icons-material/Quiz'
 import ChatIcon from '@mui/icons-material/Forum'
+import DeleteIcon from '@mui/icons-material/DeleteForever'
 
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
@@ -36,8 +38,14 @@ import TopicIcon from '@mui/icons-material/Topic'
 import LoadingText from '../../..//components/loadingtext'
 import Loader from '../../../components/loader'
 
+import DialogTopic from '../../../components/dialogtopic'
+import Dialog from '../../../components/dialog'
+
 import categoryList from '../../../assets/category.json'
 import { getSimpleId } from '../../../lib/utils'
+
+import captions from '../../../assets/captions.json'
+import useCaption from '../../../lib/usecaption'
 
 function getCategoryName(id) {
     return categoryList.items.find((item) => item.id === id)?.name
@@ -126,12 +134,15 @@ export default function Sandbox({ params, searchParams }) {
 
     const router = useRouter()
 
+    const setCaption = useCaption(captions)
+
     const addMessage = useDataStore((state) => state.add)
     const getMessages = useDataStore((state) => state.getData)
     const deleteMessages = useDataStore((state) => state.delete)
     const deleteMessage = useDataStore((state) => state.deleteOne)
     const getCourse = useDataStore((state) => state.getCourse)
     const getTopic = useDataStore((state) => state.getTopic)
+    const editTopic = useDataStore((state) => state.editTopic)
     const getQuiz = useDataStore((state) => state.getQuiz)
     const addQuiz = useDataStore((state) => state.addQuiz)
 
@@ -148,7 +159,11 @@ export default function Sandbox({ params, searchParams }) {
 
     const [inputText, setInputText] = React.useState('')
 
+    const [openEditTopic, setOpenEditTopic] = React.useState(false)
     const [openLoader, setOpenLoader] = React.useState(false)
+    const [openDialog, setOpenDialog] = React.useState(false)
+    const [paramId, setParamId] = React.useState('')
+
     const [isQuizMode, setQuizMode] = React.useState(false)
     const [isQuizFinish, setQuizFinish] = React.useState(false)
     const [quizData, setQuizData] = React.useState([])
@@ -164,18 +179,18 @@ export default function Sandbox({ params, searchParams }) {
         const topicId = params.id
 
         const messages = getMessages(topicId)
-        console.log(messages)
+        
         if(messages.length > 0) {
             setMessageItems(messages)
         }
 
         const topic = getTopic(topicId)
 
-        const gid = topic?.gid
+        const sid = topic?.sid
 
-        const course = getCourse(gid)
+        const course = getCourse(sid)
 
-        setCourseId(gid)
+        setCourseId(sid)
         setCourseCategory(course.category)
         setCourseName(course.name)
         setCourseDescription(course.description)
@@ -354,7 +369,9 @@ export default function Sandbox({ params, searchParams }) {
 
         //const smg = 'Give a brief lecture about the selected topic.'
 
-        sendMessage('')
+        const groupId = getSimpleId()
+
+        sendMessage('', groupId)
 
     }
 
@@ -370,11 +387,15 @@ export default function Sandbox({ params, searchParams }) {
         
         setLoading(true)
 
+        const groupId = getSimpleId()
+
         const smsg = inputText
         
         const newMessage = {
             id: getSimpleId(),
-            gid: params.id,
+            tid: params.id,
+            sid: courseId,
+            gid: groupId,
             role: 'user',
             content: smsg
         }
@@ -388,11 +409,11 @@ export default function Sandbox({ params, searchParams }) {
 
         scrollTop()
 
-        sendMessage(smsg)
+        sendMessage(smsg, groupId)
 
     }
     
-    const sendMessage = async (smsg) => {
+    const sendMessage = async (smsg, groupId) => {
 
         const previous = messageItems.map((item) => {
             return {
@@ -401,16 +422,17 @@ export default function Sandbox({ params, searchParams }) {
             }
         })
 
-        const system = `We will be simulating an online class. You will act as a helpful tutor.\n` +
-            `We will be discussing about the following topic:\n` +
+        const system = `In this session we will simulate a discussion between tutor and student.\n` +
+            `You will act as a helpful tutor that will teach the selected topic below.\n` +
+            `We will be discussing about the following selected topic and subtopics:\n` +
             `${topicText}\n` +
             `${subTopicText}\n` +
-            `This topic is under the subject:\n` +
+            `This topic is under the course for\n` +
             `${courseName}\n` +
             `${courseDescription}\n` +
-            `To begin, first, give a short overview of the topic.\n` +
-            `Afterwards, we will open a discussion with the user about the topic.\n` +
-            `Using Socratic approach, you will ask the user about the topic.`
+            `To begin our discussion, first, give an overview of the topic.\n` +
+            `Afterwards, using Socratic approach, you will ask the student about the topic.\n` +
+            `I will be acting as the student trying to learn the topic.`
 
         try {
 
@@ -435,7 +457,9 @@ export default function Sandbox({ params, searchParams }) {
 
             const newMessage = {
                 id: getSimpleId(),
-                gid: params.id,
+                tid: params.id,
+                sid: courseId,
+                gid: groupId,
                 role: 'assistant',
                 content: result.text
             }
@@ -452,7 +476,9 @@ export default function Sandbox({ params, searchParams }) {
             
             const newMessage = {
                 id: getSimpleId(),
-                gid: params.id,
+                tid: params.id,
+                sid: courseId,
+                gid: groupId,
                 role: 'assistant',
                 content: 'An error occured'
             }
@@ -471,11 +497,41 @@ export default function Sandbox({ params, searchParams }) {
 
     const handleDeleteMessage = (id) => () => {
         
+        setParamId(id)
+        setOpenDialog(true)
+
+        /*
         deleteMessage(id)
 
         setMessageItems((prev) => {
-            return prev.slice(0).filter((item) => item.id !== id)
+            return prev.slice(0).filter((item) => item.gid !== id)
         })
+        */
+
+    }
+    const handleDelete = (id) => {
+
+        deleteMessage(id)
+
+        setMessageItems((prev) => {
+            return prev.slice(0).filter((item) => item.gid !== id)
+        })
+
+        setOpenDialog(false)
+
+    }
+
+    const handleEditTopic = (id, topic, subtopic) => {
+
+        editTopic(id, {
+            topic: topic, 
+            subtopics: subtopic,
+        })
+
+        setTopicText(topic)
+        setSubTopicText(subtopic)
+
+        setOpenEditTopic(false)
 
     }
 
@@ -487,7 +543,7 @@ export default function Sandbox({ params, searchParams }) {
                         <HomeIcon sx={{color: '#fff'}} />
                     </IconButton>
                     <Typography sx={{color: '#FFFFFF', fontSize: '1.1rem', textTransform: 'uppercase' }}>
-                        { getCategoryName(courseCategory) }
+                        { courseCategory && setCaption(getCategoryName(courseCategory)) }
                     </Typography>
                     <IconButton onClick={() => handleGoToLink(`/course/${courseId}`)}>
                         <TopicIcon sx={{color: '#fff'}} />
@@ -498,58 +554,69 @@ export default function Sandbox({ params, searchParams }) {
                     <p className={classes.headerText}>{ courseDescription }</p>
                 </div>
             </div>
-            <div className={classes.topic}>
-                <div className={classes.topicContent}>
-                    <div className={classes.topicTopic}>{topicText}</div>
-                    {
-                        subTopicText &&
-                        <div className={classes.topicSubTopic}>{formatSubTopic(subTopicText)}</div>
-                    }
-                    <div className={classes.buttonGroup}>
+            {
+                topicText &&
+                <div className={classes.topic}>
+                    <div className={classes.topicContent}>
+                        <div className={classes.topicParent}>
+                            <Link href={`/course/${courseId}`} className={classes.linkURL}>{courseName}</Link>
+                        </div>
+                        <div className={classes.topicTopic}>{topicText}</div>
                         {
-                            messageItems.length > 0 &&
-                            <Button 
-                            onClick={handleDiscussion}
-                            startIcon={isDiscussMode ? <ResetIcon /> : <ChatIcon />} 
-                            variant='outlined' 
-                            size='large' 
-                            sx={{mr: 2, mb: 2}}>
-                                { isDiscussMode ? 'Reset Discussion' : 'Show Discussion' }
-                            </Button>
+                            subTopicText &&
+                            <div className={classes.topicSubTopic}>{formatSubTopic(subTopicText)}</div>
                         }
-                        {
-                            messageItems.length === 0 &&
-                            <Button 
-                            onClick={handleDiscussion}
-                            startIcon={isDiscussMode ? <ResetIcon /> : <ChatIcon />} 
-                            variant='outlined' 
-                            size='large' 
-                            sx={{mr: 2, mb: 2}}>
-                                { isDiscussMode ? 'Reset Discussion' : 'Start Discussion' }
-                            </Button>
-                        }
-                        {
-                            quizData.length > 0 &&
-                            <Button 
-                            onClick={handleTakeQuiz} 
-                            startIcon={isQuizMode ? <ResetIcon /> : <QuizIcon />} 
-                            variant='outlined' 
+                        <div className={classes.buttonGroup}>
+                            {
+                                messageItems.length > 0 &&
+                                <Button 
+                                onClick={handleDiscussion}
+                                startIcon={isDiscussMode ? <ResetIcon /> : <ChatIcon />} 
+                                variant='outlined' 
+                                size='large' 
+                                sx={{mr: 2, mb: 2}}>
+                                    { setCaption(isDiscussMode ? 'discussion-reset' : 'discussion-show') }
+                                </Button>
+                            }
+                            {
+                                messageItems.length === 0 &&
+                                <Button 
+                                onClick={handleDiscussion}
+                                startIcon={isDiscussMode ? <ResetIcon /> : <ChatIcon />} 
+                                variant='outlined' 
+                                size='large' 
+                                sx={{mr: 2, mb: 2}}>
+                                    { setCaption(isDiscussMode ? 'discussion-reset' : 'discussion-start') }
+                                </Button>
+                            }
+                            {
+                                quizData.length > 0 &&
+                                <Button 
+                                onClick={handleTakeQuiz} 
+                                startIcon={isQuizMode ? <ResetIcon /> : <QuizIcon />} 
+                                variant='outlined' 
+                                size='large'
+                                sx={{mr: 2, mb: 2}}>
+                                { setCaption(isQuizMode ? 'quiz-reset' : 'quiz-take') }
+                                </Button>
+                            }
+                            <Button
+                            onClick={handleGenerateQuiz}
+                            startIcon={<CreateIcon />}
+                            variant='outlined'
                             size='large'
-                            sx={{mr: 2, mb: 2}}>
-                            { isQuizMode ? 'Reset Quiz' : 'Take Quiz' }
+                            sx={{mb: 2}}>
+                            { setCaption(quizData.length > 0 ? 'quiz-generate-new' : 'quiz-generate-take') }
                             </Button>
-                        }
-                        <Button
-                        onClick={handleGenerateQuiz}
-                        startIcon={<CreateIcon />}
-                        variant='outlined'
-                        size='large'
-                        sx={{mb: 2}}>
-                        { quizData.length > 0 ? 'Generate New Quiz' : 'Generate & Take Quiz' }
-                        </Button>
+                        </div>
+                        <div className={classes.editButton}>
+                            <IconButton onClick={() => setOpenEditTopic(true)}>
+                                <SettingsIcon />
+                            </IconButton>
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
             {
                 isQuizMode &&
                 <div className={classes.quiz}>
@@ -606,9 +673,16 @@ export default function Sandbox({ params, searchParams }) {
                 <div className={classes.discussion}>
                     {
                         messageItems.length > 0 && messageItems.map((item) => {
+                            /*
+                            <div className={classes.close} onClick={handleDeleteMessage(item.gid)}>&#215;</div>
+                            */
                             return (
                                 <div key={item.id} className={classes.message}>
-                                    <div className={classes.close} onClick={handleDeleteMessage(item.id)}>&#215;</div>
+                                    <div className={classes.close}>
+                                        <IconButton onClick={handleDeleteMessage(item.gid)}>
+                                            <ClearIcon sx={{color: '#999', fontSize: '1rem'}} />
+                                        </IconButton>
+                                    </div>
                                     <p className={classes.messageText}>
                                     { item.content }
                                     </p>
@@ -633,7 +707,7 @@ export default function Sandbox({ params, searchParams }) {
                         onSubmit={handleSubmit}
                         noValidate>
                             <TextField 
-                            placeholder='Write your inquiry...'
+                            placeholder={setCaption('placeholder-inquiry')}
                             disabled={isLoading}
                             fullWidth
                             multiline
@@ -642,6 +716,9 @@ export default function Sandbox({ params, searchParams }) {
                             value={inputText}
                             //placeholder={setCaption('write-message')}
                             onChange={(e) => setInputText(e.target.value)}
+                            inputProps={{
+                                className: classes.chatInput,
+                            }}
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">
@@ -666,6 +743,34 @@ export default function Sandbox({ params, searchParams }) {
                         </Box>
                     </div>
                 </div>
+            }
+            {
+                openEditTopic && createPortal(
+                    <DialogTopic 
+                    icon={<SettingsIcon />}
+                    dialogTitle={setCaption('edit-topic')}
+                    buttonTitle={setCaption('save')}
+                    id={params.id}
+                    defaultTopic={topicText}
+                    defaultSubTopic={subTopicText}
+                    onConfirm={handleEditTopic}
+                    onClose={() => setOpenEditTopic(false)}
+                    />,
+                    document.body
+                )
+            }
+            {
+                openDialog && createPortal(
+                    <Dialog 
+                    param={paramId}
+                    icon={<DeleteIcon sx={{fontSize: '1.1rem', marginRight: '5px'}} />}
+                    title={setCaption('dialog-delete-entry')}
+                    caption={setCaption('dialog-delete-entry2')}
+                    onConfirm={handleDelete}
+                    onClose={() => setOpenDialog(false)}
+                    />,
+                    document.body
+                )
             }
             {
                 openLoader && createPortal(

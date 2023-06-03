@@ -1,6 +1,5 @@
 import Sandbox from "./sandbox"
 
-/*
 export const metadata = {
     title: process.env.siteTitle,
     description: 'A sample React app built using Next.js powered by OpenAI Chat API.',
@@ -10,8 +9,8 @@ export const metadata = {
         shortcut: '/logo192.png',
     }
 }
-*/
 
+/*
 export async function generateMetadata({ params, searchParams }, parent) {
     
     // read route params
@@ -30,6 +29,7 @@ export async function generateMetadata({ params, searchParams }, parent) {
         }
     }
 }
+*/
    
 export default function Page({ params, searchParams }) {
     return <Sandbox params={params} searchParams={searchParams} />

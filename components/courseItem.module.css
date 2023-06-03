@@ -20,6 +20,12 @@
     font-weight: 500;
     margin-bottom: .5rem;
     z-index: 1;
+    display: -webkit-box;
+    max-width: calc(100% - 2rem);
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    cursor: pointer;
 }
 .description {
     font-size: .9rem;
@@ -36,14 +42,24 @@
     right: 5px;
     top: 5px;
     z-index: 5;
-    display: none;
-}
-.course:hover .delete {
-    display: block;
 }
 .add {
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.btnAdd {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    text-transform: uppercase;
+}
+
+.click {
+    cursor: pointer;
+}
+.click:hover {
+    background-color: #ebebeb;
 }

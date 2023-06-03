@@ -31,19 +31,25 @@ function CoursePanel({
     )
 }
 
+/*
+<Button 
+                color='inherit'
+                sx={{ fontSize: '1rem', fontWeight: '400' }} 
+                onClick={onClick} 
+                startIcon={icon}>{ name }</Button>
+*/
+
 function CourseButton({
     name = '',
     onClick = undefined,
     icon = undefined,
 }) {
     return (
-        <div className={classes.course}>
+        <div className={[classes.course, classes.click].join(' ')} onClick={onClick}>
             <div className={classes.add}>
-                <Button 
-                color='inherit'
-                sx={{ fontSize: '1rem', fontWeight: '400' }} 
-                onClick={onClick} 
-                startIcon={icon}>{ name }</Button>
+                <div className={classes.btnAdd}>
+                    { icon }&nbsp;{ name }
+                </div>
             </div>
         </div>
     )

@@ -12,11 +12,14 @@ import IconButton from '@mui/material/IconButton'
 import SettingsIcon from '@mui/icons-material/Settings'
 import HomeIcon from '@mui/icons-material/Home'
 import EditIcon from '@mui/icons-material/Edit'
+import AddIcon from '@mui/icons-material/Add'
+import DeleteIcon from '@mui/icons-material/DeleteForever'
 
 import CustomButton from '../../../components/CustomButton'
 
 import DialogSubject from '../../../components/dialogsubject'
 import DialogTopic from '../../../components/dialogtopic'
+import Dialog from '../../../components/dialog'
 
 import useDataStore from '../../../store/datastore'
 
@@ -28,6 +31,9 @@ import { Typography } from '@mui/material'
 import categoryList from '../../../assets/category.json'
 import { getSimpleId } from '../../../lib/utils'
 
+import captions from '../../../assets/captions.json'
+import useCaption from '../../../lib/usecaption'
+
 function getCategoryName(id) {
     return categoryList.items.find((item) => item.id === id)?.name
 }
@@ -37,6 +43,8 @@ export default function Sandbox({
     searchParams 
 }) {
 
+    const setCaption = useCaption(captions)
+
     const router = useRouter()
 
     const courses = useDataStore((state) => state.courses)
@@ -44,12 +52,15 @@ export default function Sandbox({
 
     const addTopic = useDataStore((state) => state.addTopic)
     const editTopic = useDataStore((state) => state.editTopic)
+    const deleteTopic = useDataStore((state) => state.deleteTopic)
     const getTopics = useDataStore((state) => state.getTopics)
 
     const [openEditSubject, setOpenEditSubject] = React.useState(false)
     const [openAddTopic, setOpenAddTopic] = React.useState(false)
-
+    const [openDialog, setOpenDialog] = React.useState(false)
     const [openLoader, setOpenLoader] = React.useState(false)
+
+    const [paramId, setParamId] = React.useState('')
 
     const [courseCategory, setCourseCategory] = React.useState('')
     const [courseName, setCourseName] = React.useState('')
@@ -84,8 +95,10 @@ export default function Sandbox({
     }, [])
 
     const handleGotoHome = () => {
+
         setOpenLoader(true)
         router.push('/')
+
     }
 
     const handleEditSubject = (category, name, description) => {
@@ -128,7 +141,7 @@ export default function Sandbox({
 
             const newTopic = {
                 id: getSimpleId(),
-                gid: params.id,
+                sid: params.id,
                 topic: topicName, 
                 subtopics: subTopicNames,
             }
@@ -150,6 +163,17 @@ export default function Sandbox({
 
     }
 
+    const handleDeleteTopic = (id) => {
+        setParamId(id)
+        setOpenDialog(true)
+    }
+
+    const handleDelete = (id) => {
+        setTopicItems((prev) => prev.slice(0).filter((item) => item.id !== id))
+        deleteTopic(id)
+        setOpenDialog(false)
+    }
+
     const handleEditTopic = (id, topic, subtopic) => {
         
         setTopicDialogMode(1)
@@ -169,11 +193,6 @@ export default function Sandbox({
 
     }
 
-    /*
-    <button 
-                    onClick={handleShowAddTopic} 
-                    className={classes.button}><span className={classes.icon}>&#43;</span> Add Topic</button>
-    */
     return (
         <div className={classes.container}>
             <div className={classes.header}>
@@ -183,7 +202,7 @@ export default function Sandbox({
                     </IconButton>
                     {
                         courseCategory &&
-                        <Typography sx={{color: '#FFFFFF', fontSize: '1.1rem', textTransform: 'uppercase' }}>{ getCategoryName(courseCategory) }</Typography>
+                        <Typography sx={{color: '#FFFFFF', fontSize: '1.1rem', textTransform: 'uppercase' }}>{ courseCategory && setCaption(getCategoryName(courseCategory)) }</Typography>
                     }
                     <IconButton onClick={() => setOpenEditSubject(true)}>
                         <SettingsIcon sx={{color: '#fff'}} />
@@ -194,7 +213,7 @@ export default function Sandbox({
                     <p className={classes.headerText}>{ courseDescription }</p>
                     <CustomButton
                     onClick={handleShowAddTopic} 
-                    >Add Topic</CustomButton>
+                    >{setCaption('add-topic')}</CustomButton>
                 </div>
             </div>
             <div className={classes.main}>
@@ -210,10 +229,21 @@ export default function Sandbox({
                                 <li key={item.id} className={classes.item}>
                                     <div className={classes.topic}>
                                         <div className={classes.topicName}>
-                                            <span onClick={() => handleTopicClick(item.id)} className={classes.topicNameText}>{item.topic}</span>&nbsp;
-                                            <IconButton onClick={() => handleEditTopic(item.id, item.topic, item.subtopics)} size="small">
-                                                <EditIcon fontSize="inherit" />
-                                            </IconButton>
+                                            <div onClick={() => handleTopicClick(item.id)} className={classes.topicNameText}>{item.topic}</div>
+                                            <div className={classes.buttons}>
+                                                <IconButton 
+                                                onClick={() => handleEditTopic(item.id, item.topic, item.subtopics)} 
+                                                size="small"
+                                                sx={{mr: 1}}
+                                                >
+                                                    <EditIcon fontSize="inherit" />
+                                                </IconButton>
+                                                <IconButton 
+                                                onClick={() => handleDeleteTopic(item.id)} 
+                                                size="small">
+                                                    <DeleteIcon fontSize="inherit" />
+                                                </IconButton>
+                                            </div>
                                         </div>
                                         <div className={classes.topicText} onClick={() => handleTopicClick(item.id)}>
                                         {
@@ -247,8 +277,8 @@ export default function Sandbox({
                 openEditSubject && createPortal(
                     <DialogSubject
                     icon={<SettingsIcon />}
-                    dialogTitle='Edit Subject'
-                    buttonTitle='Save'
+                    dialogTitle={setCaption('edit-subject')}
+                    buttonTitle={setCaption('save')}
                     defaultCategory={courseCategory}
                     defaultName={courseName}
                     defaultDescription={courseDescription}
@@ -261,8 +291,11 @@ export default function Sandbox({
             {
                 openAddTopic && createPortal(
                     <DialogTopic
-                    dialogTitle={topicDialogMode > 0 ? 'Edit Topic' : 'Add Topic'}
-                    buttonTitle={topicDialogMode > 0 ? 'Save' : 'Add'}
+                    icon={topicDialogMode > 0 ? <EditIcon /> : <AddIcon />}
+                    //dialogTitle={topicDialogMode > 0 ? 'Edit Topic' : setCaption('add-topic')}
+                    dialogTitle={setCaption(topicDialogMode > 0 ? 'edit-topic' : 'add-topic')}
+                    buttonTitle={setCaption(topicDialogMode > 0 ? 'save' : 'add')}
+                    //buttonTitle={topicDialogMode > 0 ? 'Save' : 'Add'}
                     //defaultCategory={courseCategory}
                     //defaultName={courseName}
                     //defaultDescription={courseDescription}
@@ -271,6 +304,21 @@ export default function Sandbox({
                     defaultSubTopic={topicDialogMode > 0 ? defaultSubTopic : ''}
                     onConfirm={handleAddTopic}
                     onClose={() => setOpenAddTopic(false)}
+                    //onDelete={() => {}}
+                    //isDeleteVisible={topicDialogMode > 0}
+                    />,
+                    document.body
+                )
+            }
+            {
+                openDialog && createPortal(
+                    <Dialog 
+                    param={paramId}
+                    icon={<DeleteIcon sx={{fontSize: '1.1rem', marginRight: '5px'}} />}
+                    title={setCaption('dialog-topic-title')}
+                    caption={setCaption('dialog-topic-text')}
+                    onConfirm={handleDelete}
+                    onClose={() => setOpenDialog(false)}
                     />,
                     document.body
                 )

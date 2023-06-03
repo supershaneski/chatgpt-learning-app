@@ -9,39 +9,58 @@ import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button'
 import FormControl from '@mui/material/FormControl'
-import InputLabel from '@mui/material/InputLabel'
-import Select from '@mui/material/Select'
-import MenuItem from '@mui/material/MenuItem'
-import Divider from '@mui/material/Divider'
+//import InputLabel from '@mui/material/InputLabel'
+//import Select from '@mui/material/Select'
+//import MenuItem from '@mui/material/MenuItem'
+//import Divider from '@mui/material/Divider'
 import ClearIcon from '@mui/icons-material/Clear';
 
-import categoryList from '../assets/category.json'
+//import categoryList from '../assets/category.json'
+
+import captions from '../assets/captions.json'
+import useCaption from '../lib/usecaption';
 
 import classes from './dialogtopic.module.css'
 
 function DialogTopic({
+    icon = null,
     dialogTitle = '',
     buttonTitle = '',
-    //defaultCategory = 'cat0001',
-    //defaultName = '',
-    //defaultDescription = '',
     id = '',
     defaultTopic = '',
     defaultSubTopic = '',
+    isDeleteVisible = false,
     onConfirm = undefined,
     onClose = undefined,
+    onDelete = undefined,
 }) {
 
-    //const [category, setCategory] = React.useState(defaultCategory)
+    const setCaption = useCaption(captions)
 
     const [topic, setTopic] = React.useState(defaultTopic)
     const [subTopics, setSubTopics] = React.useState(defaultSubTopic)
 
+    /*
+    <div className={classes.header}>
+                    <h4 className={classes.title}>{ dialogTitle }</h4>
+                </div>
+    */
+    
     return (
         <div className={classes.container}>
             <div className={classes.dialog}>
                 <div className={classes.header}>
-                    <h4 className={classes.title}>{ dialogTitle }</h4>
+                    {
+                        icon &&
+                        <>
+                        { icon }&nbsp;<h4 className={classes.title}>{ dialogTitle }</h4>
+                        </>
+                        
+                    }
+                    {
+                        !icon &&
+                        <h4 className={classes.title}>{ dialogTitle }</h4>
+                    }
                 </div>
                 <div className={classes.main}>
                     <div className={classes.name}>
@@ -49,10 +68,13 @@ function DialogTopic({
                             <TextField
                             fullWidth
                             required
-                            label='Topic'
-                            placeholder={`Enter Topic...`}
+                            label={setCaption('topic')}
+                            placeholder={setCaption('placeholder-topic')}
                             value={topic}
                             onChange={(e) => setTopic(e.target.value)}
+                            inputProps={{
+                                maxLength: 128,
+                            }}
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">
@@ -72,14 +94,16 @@ function DialogTopic({
                         <FormControl fullWidth>
                             <TextField
                             fullWidth
-                            //required
-                            label='SubTopics'
-                            placeholder={`Enter SubTopics...`}
+                            label={setCaption('subtopic')}
+                            placeholder={setCaption('placeholder-subtopic')}
                             value={subTopics}
                             multiline
-                            rows={3}
+                            //rows={3}
                             maxRows={3}
                             onChange={(e) => setSubTopics(e.target.value)}
+                            inputProps={{
+                                maxLength: 384,
+                            }}
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">
@@ -98,14 +122,22 @@ function DialogTopic({
                 </div>
                 <div className={classes.action}>
                     <Button 
-                    disabled={topic.length === 0}
-                    onClick={() => onConfirm(id, topic, subTopics)} 
+                    //disabled={topic.length === 0}
+                    onClick={() => onDelete(id)} 
                     variant='outlined' 
-                    sx={{width: '120px', mr: 1}}>{buttonTitle}</Button>
-                    <Button 
-                    onClick={() => onClose()} 
-                    variant='outlined' 
-                    sx={{width: '120px'}}>Close</Button>
+                    color='error'
+                    sx={{width: '120px', visibility: isDeleteVisible ? 'visible' : 'hidden'}}>{setCaption('delete')}</Button>
+                    <div className={classes.buttonGroup}>
+                        <Button 
+                        disabled={topic.length === 0}
+                        onClick={() => onConfirm(id, topic, subTopics)} 
+                        variant='outlined' 
+                        sx={{width: '120px', mr: 1}}>{buttonTitle}</Button>
+                        <Button 
+                        onClick={() => onClose()} 
+                        variant='outlined' 
+                        sx={{width: '120px'}}>{ setCaption('close') }</Button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -113,6 +145,14 @@ function DialogTopic({
 }
 
 DialogTopic.propTypes = {
+    /**
+     * isDeleteVisible boolean
+     */
+    isDeleteVisible: PropTypes.bool,
+    /**
+     * icon element
+     */
+    icon: PropTypes.element,
     /**
      * dialogTitle string
      */
@@ -141,6 +181,10 @@ DialogTopic.propTypes = {
      * onClose handler
      */
     onClose: PropTypes.func,
+    /**
+     * onDelete handler
+     */
+    onDelete: PropTypes.func,
 }
 
 export default DialogTopic
