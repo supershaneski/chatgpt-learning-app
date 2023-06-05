@@ -5,16 +5,19 @@ A sample React application built with Next.js 13 and powered by the OpenAI Chat 
 
 The application supports Japanese language settings. (日本語対応)
 
+
 # Description
 
 This sample app aims to be a learning hub to aid students in their subjects.
 By providing topics from their actual course syllabus, the user can interact with the AI chatbot tutor and enagage in dynamic conversations related to the topics. Ask questions, explore concepts and receive detailed explanations. 
-You can also generate Quiz to test your knowledge of the topic. User can learn at their own pace using this app.
+Generate Quiz to test your knowledge of the topic. User can learn at their own pace using this app.
+
 
 # Application
 
 From the landing page, you can add your subjects. 
 Provide the subject name and a brief description of the subject.
+You can practically add any subject aside from academic subjects.
 
 ![Subject list](./docs/screenshot_home.png "Subject list")
 

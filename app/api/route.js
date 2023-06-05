@@ -36,7 +36,7 @@ export async function POST(request) {
 
     }
 
-    console.log('count', prev_data.length)
+    //console.log('count', prev_data.length)
 
     let text = ''
 
