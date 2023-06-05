@@ -7,8 +7,33 @@ The application supports Japanese language settings. (日本語対応)
 
 # Description
 
-This app aims to be a learning hub to aid students in their subjects.
-By providing topics from their actual course syllabus, the user can interact with the AI chatbot tutor and enagage in dynamic conversations related to the topics. Ask questions, explore concepts and receive detailed explanations. User can learn at their own pace using this app.
+This sample app aims to be a learning hub to aid students in their subjects.
+By providing topics from their actual course syllabus, the user can interact with the AI chatbot tutor and enagage in dynamic conversations related to the topics. Ask questions, explore concepts and receive detailed explanations. 
+You can also generate Quiz to test your knowledge of the topic. User can learn at their own pace using this app.
+
+# Application
+
+From the landing page, you can add your subjects. 
+Provide the subject name and a brief description of the subject.
+
+![Subject list](./docs/screenshot_home.png "Subject list")
+
+When you click on a particular subject, you will be directed to the Subject page.
+Here, you will add the Topics for the selected subject.
+Use the course syllabus provided by your actual subject for the list of topics.
+
+![Topic list](./docs/screenshot_topic.png "Topic list")
+
+When you click a particular topic, you will be redirected to the Topic page. Here, you can discuss the topic with the AI chatbot or test your skill by generating Quiz.
+
+
+![Discussion page](./docs/screenshot_discussion.png "Discussion page")
+
+Test your knowledge of the topic in the Quiz page.
+You will be given 10 multiple-choice questions.
+You can regenerate new Quiz if you already completed the previous one or having difficulty answering.
+
+![Quiz page](./docs/screenshot_quiz.png "Quiz page")
 
 # Stack
 
@@ -81,5 +106,5 @@ Then run the app
 npm run dev
 ```
 
-Open your browser to `http://localhost:3007/` to load the application page.
+Open your browser to `http://localhost:3008/` to load the application page.
 
