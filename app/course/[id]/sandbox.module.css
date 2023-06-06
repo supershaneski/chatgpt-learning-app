@@ -125,6 +125,7 @@
     color: inherit;
 }
 .sublist {
+    list-style: upper-alpha;
     color: var(--color-text);
 }
 

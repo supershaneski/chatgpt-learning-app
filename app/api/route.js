@@ -12,6 +12,7 @@ export async function POST(request) {
         })
     }
 
+    // Allow no inquiry: used in the beginning of Discussion
     /*if (!inquiry) {
         return new Response('Bad question', {
             status: 400,
@@ -35,8 +36,6 @@ export async function POST(request) {
         prev_data = previous.slice(cutoff)
 
     }
-
-    //console.log('count', prev_data.length)
 
     let text = ''
 

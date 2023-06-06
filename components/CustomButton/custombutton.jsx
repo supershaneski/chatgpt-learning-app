@@ -16,7 +16,12 @@ const ColorButton = styled(Button)(({ theme }) => ({
 
 export default function CustomButton(props) {
     return (
-        <ColorButton onClick={props.onClick} startIcon={<AddIcon />} variant="contained" disableElevation sx={{padding: '10px 40px', borderRadius: '3px', fontSize: '1rem', fontWeight: '400'}}>
+        <ColorButton 
+        onClick={props.onClick} 
+        startIcon={props.icon} 
+        variant="contained" 
+        disableElevation 
+        sx={{marginRight: '10px', padding: '10px 40px', borderRadius: '3px', fontSize: '1rem', fontWeight: '400'}}>
         {props.children}</ColorButton>
     )
 }

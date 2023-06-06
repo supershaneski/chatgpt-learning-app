@@ -14,12 +14,14 @@ import HomeIcon from '@mui/icons-material/Home'
 import EditIcon from '@mui/icons-material/Edit'
 import AddIcon from '@mui/icons-material/Add'
 import DeleteIcon from '@mui/icons-material/DeleteForever'
+import CreateIcon from '@mui/icons-material/BorderColor'
 
 import CustomButton from '../../../components/CustomButton'
 
 import DialogSubject from '../../../components/dialogsubject'
 import DialogTopic from '../../../components/dialogtopic'
 import Dialog from '../../../components/dialog'
+import DialogOutline from '../../../components/dialogoutline'
 
 import useDataStore from '../../../store/datastore'
 
@@ -52,6 +54,7 @@ export default function Sandbox({
 
     const addTopic = useDataStore((state) => state.addTopic)
     const editTopic = useDataStore((state) => state.editTopic)
+    const deleteTopics = useDataStore((state) => state.deleteTopics)
     const deleteTopic = useDataStore((state) => state.deleteTopic)
     const getTopics = useDataStore((state) => state.getTopics)
 
@@ -59,6 +62,9 @@ export default function Sandbox({
     const [openAddTopic, setOpenAddTopic] = React.useState(false)
     const [openDialog, setOpenDialog] = React.useState(false)
     const [openLoader, setOpenLoader] = React.useState(false)
+
+    const [openOutline, setOpenOutline] = React.useState(false)
+    const [outline, setOutline] = React.useState('')
 
     const [paramId, setParamId] = React.useState('')
 
@@ -193,6 +199,98 @@ export default function Sandbox({
 
     }
 
+    const handleOutline = (data) => {
+
+        if(data.length === 0) {
+            setOpenOutline(false)
+            return
+        }
+
+        deleteTopics(params.id)
+        setTopicItems([])
+        
+        data.forEach((item) => {
+
+            const newTopic = {
+                id: getSimpleId(),
+                sid: params.id,
+                topic: item.topic, 
+                subtopics: item.subtopics.join('\n'),
+            }
+    
+            addTopic(newTopic)
+    
+            setTopicItems((prev) => [...prev, ...[newTopic]])
+
+        })
+
+        setOpenOutline(false)
+
+    }
+
+    const handleGenerateOutline = async () => {
+
+        setOpenOutline(true)
+
+        /*
+        setOpenLoader(true)
+
+        try {
+
+            const prompt = `Write a sample course outline for the selected subject.\n` +
+                `Subject Title: ${courseName}\n` +
+                `Subject Description: ${courseDescription}\n` +
+                `Divide the outline in several sections.\n` +
+                `Write subtopics that is relevant under each section.\n` +
+                `Follow this sample format:\n` +
+                `I. Section title\n` +
+                `- Subtopic 1\n` +
+                `- Subtopic 2\n` +
+                `- Subtopic 3\n` +
+                `II. Section title\n` +
+                `- Subtopic 1\n` +
+                `- Subtopic 2\n` +
+                `- Subtopic 3\n` +
+                `III. Section title\n` +
+                `- Subtopic 1\n` +
+                `- Subtopic 2\n` +
+                `- Subtopic 3\n` +
+                `[Start]\n`
+
+            const response = await fetch('/generate/', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    prompt,
+                })
+            })
+
+            if(!response.ok) {
+                console.log('Oops, an error occurred', response.status)
+            }
+
+            const result = await response.json()
+
+            //console.log(result)
+
+            setOutline(result.text)
+
+            setOpenLoader(false)
+            setOutline(result.text)
+            setOpenOutline(true)
+
+        } catch(error) {
+            console.log(error)
+
+            setOpenLoader(false)
+        }
+        */
+
+    }
+
     return (
         <div className={classes.container}>
             <div className={classes.header}>
@@ -211,9 +309,17 @@ export default function Sandbox({
                 <div className={classes.banner}>
                     <h1 className={classes.headerTitle}>{ courseName }</h1>
                     <p className={classes.headerText}>{ courseDescription }</p>
-                    <CustomButton
-                    onClick={handleShowAddTopic} 
-                    >{setCaption('add-topic')}</CustomButton>
+                    <div className={classes.topbutton}>
+                        <CustomButton
+                        icon={<AddIcon />}
+                        onClick={handleShowAddTopic} 
+                        >{setCaption('add-topic')}</CustomButton>
+                        <CustomButton
+                        disabled={courseName.length === 0}
+                        icon={<CreateIcon />}
+                        onClick={handleGenerateOutline} 
+                        >{setCaption('topic-generate')}</CustomButton>
+                    </div>
                 </div>
             </div>
             <div className={classes.main}>
@@ -319,6 +425,19 @@ export default function Sandbox({
                     caption={setCaption('dialog-topic-text')}
                     onConfirm={handleDelete}
                     onClose={() => setOpenDialog(false)}
+                    />,
+                    document.body
+                )
+            }
+            {
+                openOutline && createPortal(
+                    <DialogOutline
+                    //data={outline}
+                    courseName={courseName}
+                    courseDescription={courseDescription}
+                    isTopicExist={topicItems.length > 0}
+                    onConfirm={handleOutline}
+                    onClose={() => setOpenOutline(false)}
                     />,
                     document.body
                 )

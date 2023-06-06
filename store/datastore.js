@@ -97,6 +97,11 @@ const useDataStore = create(
                 set({ topics })
 
             },
+            deleteTopics: (id) => {
+                const topics = get().topics.slice(0).filter((item) => item.sid !== id)
+
+                set({ topics })
+            },
             deleteTopic: (id) => {
                 const topics = get().topics.slice(0).filter((item) => item.id !== id)
 

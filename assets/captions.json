@@ -20,9 +20,13 @@
     "quiz-take": ["Take Quiz", "クイズの受験"],
     "quiz-reset": ["Reset Quiz", "クイズの再設定"],
 
+    "use-outline": ["Use Outline", "アウトラインを使用する"],
+    "generate-again": ["Generate Again", "もう一度生成します"],
+    "topic-generate": ["Generate Outline", "アウトラインの生成"],
     "quiz-generate-new": ["Generate New Quiz", "新しいクイズを生成"],
     "quiz-generate-take": ["Generate & Take Quiz", "クイズを生成して解く"],
 
+    "submit-answers": ["Submit Answers", "回答を送信する"],
     "delete": ["Delete", "削除"],
     "save": ["Save", "保存"],
     "add-topic": ["Add Topic", "トピックを追加する"],

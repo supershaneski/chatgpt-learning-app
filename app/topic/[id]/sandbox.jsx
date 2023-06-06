@@ -274,8 +274,6 @@ export default function Sandbox({ params, searchParams }) {
 
             const result = await response.json()
 
-            console.log(result)
-
             addQuiz({
                 id: params.id,
                 content: result.text
@@ -290,6 +288,8 @@ export default function Sandbox({ params, searchParams }) {
 
         } catch(error) {
             console.log(error)
+
+
         }
 
         setOpenLoader(false)
@@ -360,14 +360,9 @@ export default function Sandbox({ params, searchParams }) {
 
         }
 
-        //setQuizMode(false)
-        //setDiscussMode(true)
-
     }
 
     const startDiscussion = () => {
-
-        //const smg = 'Give a brief lecture about the selected topic.'
 
         const groupId = getSimpleId()
 
@@ -480,7 +475,7 @@ export default function Sandbox({ params, searchParams }) {
                 sid: courseId,
                 gid: groupId,
                 role: 'assistant',
-                content: 'An error occured'
+                content:  setCaption('error-unexpected') //'An unexpected error occured'
             }
 
             setMessageItems((prev) => [...prev, ...[newMessage]])
@@ -499,14 +494,6 @@ export default function Sandbox({ params, searchParams }) {
         
         setParamId(id)
         setOpenDialog(true)
-
-        /*
-        deleteMessage(id)
-
-        setMessageItems((prev) => {
-            return prev.slice(0).filter((item) => item.gid !== id)
-        })
-        */
 
     }
     const handleDelete = (id) => {
@@ -570,6 +557,7 @@ export default function Sandbox({ params, searchParams }) {
                             {
                                 messageItems.length > 0 &&
                                 <Button 
+                                disabled={isLoading}
                                 onClick={handleDiscussion}
                                 startIcon={isDiscussMode ? <ResetIcon /> : <ChatIcon />} 
                                 variant='outlined' 
@@ -581,6 +569,7 @@ export default function Sandbox({ params, searchParams }) {
                             {
                                 messageItems.length === 0 &&
                                 <Button 
+                                disabled={isLoading}
                                 onClick={handleDiscussion}
                                 startIcon={isDiscussMode ? <ResetIcon /> : <ChatIcon />} 
                                 variant='outlined' 
@@ -592,6 +581,7 @@ export default function Sandbox({ params, searchParams }) {
                             {
                                 quizData.length > 0 &&
                                 <Button 
+                                disabled={isLoading}
                                 onClick={handleTakeQuiz} 
                                 startIcon={isQuizMode ? <ResetIcon /> : <QuizIcon />} 
                                 variant='outlined' 
@@ -601,6 +591,7 @@ export default function Sandbox({ params, searchParams }) {
                                 </Button>
                             }
                             <Button
+                            disabled={isLoading}
                             onClick={handleGenerateQuiz}
                             startIcon={<CreateIcon />}
                             variant='outlined'
@@ -610,7 +601,7 @@ export default function Sandbox({ params, searchParams }) {
                             </Button>
                         </div>
                         <div className={classes.editButton}>
-                            <IconButton onClick={() => setOpenEditTopic(true)}>
+                            <IconButton disabled={isLoading} onClick={() => setOpenEditTopic(true)}>
                                 <SettingsIcon />
                             </IconButton>
                         </div>
@@ -633,7 +624,6 @@ export default function Sandbox({ params, searchParams }) {
                                         sx={{ ml: 2 }}>
                                             <RadioGroup
                                             aria-labelledby="demo-radio-buttons-group-label"
-                                            //defaultValue=""
                                             name={`radio-buttons-group-${index}`}
                                             value={answerData[index]}
                                             onChange={(e) => handleAnswerClick(index, e.target.value)}
@@ -652,13 +642,17 @@ export default function Sandbox({ params, searchParams }) {
                             })
                         }
                         <div className={classes.quizAction}>
-                            <Button disabled={isQuizFinish} onClick={handleSubmitQuiz} variant='outlined' size='large'>Submit Answers</Button>
+                            <Button 
+                            disabled={isQuizFinish} 
+                            onClick={handleSubmitQuiz} 
+                            variant='outlined' 
+                            size='large'>{ setCaption('submit-answers') }</Button>
                         </div>
                         {
                             isQuizFinish &&
                             <div className={classes.quizResult}>
                                 <p className={classes.quizResultText}>
-                                    { `Score: ${quizScore}/10` }
+                                    { `Score: ${quizScore}/${quizData.length}` }
                                 </p>
                                 <p className={classes.quizResultMessage}>
                                     { getScoreMessage(quizScore) }
