@@ -24,7 +24,7 @@ Enter the subject name and provide a concise description.
 On the Subject page, you can add the topic outline by clicking the "Add Topic" button.
 If you are using an academic subject, you can copy the items from your syllabus.
 
-You can also generate the topic outline automatically by clicking the "Generate Outline" button. Ensure that the subject name and description are accurate. You can edit the topics later after adding them.
+You can also generate the topic outline automatically by clicking the "Generate Outline" button. Ensure that the subject name and description are accurate and descriptive. You can edit the topics later after adding them.
 
 ![Generate outline](./docs/screenshot_generate.png "Generate outline")
 
