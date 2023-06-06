@@ -1,89 +1,58 @@
 chatgpt-learning-app
 ======
 
-A sample React application built with Next.js 13 and powered by the OpenAI Chat API. 
+This sample React app aims to be a learning hub that aids students in their studies. By providing topics from their actual course syllabus, users can interact with the AI chatbot tutor and engage in dynamic conversations related to the topics. They can ask questions, explore concepts, and receive detailed explanations. Additionally, they can generate quizzes to test their knowledge of the topic.
 
-The application supports Japanese language settings. (日本語対応)
+The application is built using Next.js 13, powered by the OpenAI API, and supports Japanese language settings (日本語対応).
 
+---
 
-# Description
+このサンプルのReactアプリは、学生の学習を支援する学習ハブを目指しています。実際のコースシラバスからトピックを提供することで、ユーザーはAIチャットボットチューターと対話し、トピックに関連するダイナミックな会話に参加することができます。質問をしたり、概念を探求したり、詳細な説明を受けたりすることができます。さらに、トピックの知識をテストするためにクイズを生成することもできます。
 
-This sample app aims to be a learning hub to aid students in their subjects.
-By providing topics from their actual course syllabus, the user can interact with the AI chatbot tutor and enagage in dynamic conversations related to the topics. Ask questions, explore concepts and receive detailed explanations. 
-Generate Quiz to test your knowledge of the topic. User can learn at their own pace using this app.
+このアプリケーションは、Next.js 13を使用して構築されており、OpenAI APIで動作しており、日本語の言語設定に対応しています。
 
 
 # Application
 
-From the landing page, you can add your subjects. 
-Provide the subject name and a brief description of the subject.
-You can practically add any subject aside from academic subjects.
-
 ![Subject list](./docs/screenshot_home.png "Subject list")
 
-When you click on a particular subject, you will be directed to the Subject page.
-Here, you will add the Topics for the selected subject.
-Use the course syllabus provided by your actual subject for the list of topics.
+To add a subject, simply click on the "Add Subject" button.
+Enter the subject name and provide a concise description.
 
 ![Topic list](./docs/screenshot_topic.png "Topic list")
 
-When you click a particular topic, you will be redirected to the Topic page. Here, you can discuss the topic with the AI chatbot or test your skill by generating Quiz.
+On the Subject page, you can add the topic outline by clicking the "Add Topic" button.
+If you are using an academic subject, you can copy the items from your syllabus.
 
+You can also generate the topic outline automatically by clicking the "Generate Outline" button. Ensure that the subject name and description are accurate. You can edit the topics later after adding them.
+
+![Generate outline](./docs/screenshot_generate.png "Generate outline")
+
+You can add any subject you can think of, in addition to your academic subjects. Just use the auto-generation feature for the topic outline.
+
+![Sample Topic](./docs/screenshot_result.png "Sample topic")
+
+Click on the topic title to go to the Topic page.
+On the Topic page, you can discuss the selected topic with the chatbot or generate and take a Quiz.
 
 ![Discussion page](./docs/screenshot_discussion.png "Discussion page")
 
-Test your knowledge of the topic in the Quiz page.
-You will be given 10 multiple-choice questions.
-You can regenerate new Quiz if you already completed the previous one or having difficulty answering.
+Test your knowledge of the topic on the Quiz page.
+You will be presented with 10 multiple-choice questions.
+If you have completed the previous quiz or are having difficulty answering, you can generate a new quiz.
 
 ![Quiz page](./docs/screenshot_quiz.png "Quiz page")
 
-# Stack
+# Sample Subject
 
-* [Next.js 13](https://nextjs.org/docs/getting-started/installation), the React framework, latest version
+Here is a sample subject, for example, you want to learn practical Japanese.
 
-  Manual installation
+![Japanese Subject](./docs/screenshot_japanese1.png)
 
-  ```sh
-  $ npm install next@latest react@latest react-dom@latest
-  ```
+In the discussion page, you can ask the chatbot tutor basically anything related to the topic and do role play, etc.
 
-* [Storybook](https://storybook.js.org/recipes/next), components workshop 
+![Japanese Discussion](./docs/screenshot_japanese2.png)
 
-  ```sh
-  $ npx storybook@latest init
-  ```
-
-* [Material UI](npm install @mui/material @emotion/react @emotion/styled
-), React components library
-
-  ```sh
-  $ npm install @mui/material @emotion/react @emotion/styled
-  ```
-
-  Roboto font
-
-  ```sh
-  $ npm install @fontsource/roboto
-  ```
-
-  Icons
-
-  ```sh
-  $ npm install @mui/icons-material
-  ```
-
-* [Zustand](https://github.com/pmndrs/zustand), global app state management and also using the [persisting store data](https://docs.pmnd.rs/zustand/integrations/persisting-store-data) as simple database
-
-  ```sh
-  $ npm install zustand
-  ```
-
-* [OpenAI](https://github.com/openai/openai-node#readme), OpenAI Node.JS library to access OpenAI APIs
-  
-  ```sh
-  $ npm install openai
-  ```
 
 # Setup
 
