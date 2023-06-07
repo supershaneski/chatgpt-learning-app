@@ -108,7 +108,6 @@ function DialogSubject({
                                 maxLength: 256,
                             }}
                             fullWidth
-                            //required
                             label={setCaption('description')}
                             placeholder={setCaption('placeholder-description')}
                             value={description}

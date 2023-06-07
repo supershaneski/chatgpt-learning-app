@@ -20,6 +20,8 @@
     "quiz-take": ["Take Quiz", "クイズの受験"],
     "quiz-reset": ["Reset Quiz", "クイズの再設定"],
 
+    "overwrite": ["Do you want to overwrite the existing topics?", "既存のトピックを上書きしますか?"],
+
     "use-outline": ["Use Outline", "アウトラインを使用する"],
     "generate-again": ["Generate Again", "もう一度生成します"],
     "topic-generate": ["Generate Outline", "アウトラインの生成"],

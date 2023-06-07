@@ -49,9 +49,6 @@ function Search({
                 noValidate
                 >
                     <TextField
-                    //fullWidth
-                    //required
-                    //label='Search'
                     ref={inputRef}
                     placeholder={setCaption('search')}
                     value={searchText}

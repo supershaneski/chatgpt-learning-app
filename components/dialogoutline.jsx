@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 
 import Button from '@mui/material/Button'
 import CircularProgress from '@mui/material/CircularProgress'
-import CreateIcon from '@mui/icons-material/BorderColor'
+//import CreateIcon from '@mui/icons-material/BorderColor'
 
 import classes from './dialogoutline.module.css'
 import captions from '../assets/captions.json'
@@ -119,7 +119,9 @@ export default function DialogOutline({
             const result = await response.json()
 
             setData(result.text)
-            
+
+            setLoading(false)
+
         } catch(error) {
 
             console.log(error)
@@ -162,16 +164,15 @@ export default function DialogOutline({
         generateOutline()
 
     }
-    
+
     return (
         <div className={classes.container}>
             <div className={classes.dialog}>
                 <div className={classes.main}>
-                    <div className={classes.header}>
-                        <CreateIcon sx={{mr: '10px'}} />
-                        <h4 className={classes.headerTitle}>
-                        { setCaption('topic-generate') }
-                        </h4>
+                    
+                    <div className={classes.course}>
+                        <h4 className={classes.courseTitle}>{ courseName }</h4>
+                        <p className={classes.courseText}>{ courseDescription }</p>
                     </div>
                     <div className={classes.outline}>
                     {
@@ -232,7 +233,7 @@ export default function DialogOutline({
                     <div className={classes.cover}>
                         <div className={classes.coverpanel}>
                             <div className={classes.covertext}>
-                                <span>Do you want to overwrite the existing topics?</span>
+                                <span>{setCaption('overwrite')}</span>
                             </div>
                             <div className={classes.coveraction}>
                                 <Button sx={{ mr: '10px' }} variant='outlined' onClick={handleConfirm}>{setCaption('yes')}</Button>

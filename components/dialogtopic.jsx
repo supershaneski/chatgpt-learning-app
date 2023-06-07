@@ -9,17 +9,10 @@ import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button'
 import FormControl from '@mui/material/FormControl'
-//import InputLabel from '@mui/material/InputLabel'
-//import Select from '@mui/material/Select'
-//import MenuItem from '@mui/material/MenuItem'
-//import Divider from '@mui/material/Divider'
 import ClearIcon from '@mui/icons-material/Clear';
-
-//import categoryList from '../assets/category.json'
 
 import captions from '../assets/captions.json'
 import useCaption from '../lib/usecaption';
-
 import classes from './dialogtopic.module.css'
 
 function DialogTopic({
@@ -40,12 +33,6 @@ function DialogTopic({
     const [topic, setTopic] = React.useState(defaultTopic)
     const [subTopics, setSubTopics] = React.useState(defaultSubTopic)
 
-    /*
-    <div className={classes.header}>
-                    <h4 className={classes.title}>{ dialogTitle }</h4>
-                </div>
-    */
-    
     return (
         <div className={classes.container}>
             <div className={classes.dialog}>
@@ -98,8 +85,8 @@ function DialogTopic({
                             placeholder={setCaption('placeholder-subtopic')}
                             value={subTopics}
                             multiline
-                            //rows={3}
-                            maxRows={3}
+                            rows={3}
+                            //maxRows={3}
                             onChange={(e) => setSubTopics(e.target.value)}
                             inputProps={{
                                 maxLength: 384,
