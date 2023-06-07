@@ -14,6 +14,8 @@ The application is built using Next.js 13, powered by the OpenAI API, and suppor
 
 # Application
 
+> Note: Please note that this app requires [OpenAI API key](https://platform.openai.com/docs/guides/production-best-practices/api-keys) to run. See [Setup](#setup).
+
 ![Subject list](./docs/screenshot_home.png "Subject list")
 
 To add a subject, simply click on the "Add Subject" button.
