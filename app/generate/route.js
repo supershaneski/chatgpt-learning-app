@@ -16,8 +16,8 @@ export async function POST(request) {
 
         text = await textCompletion({
             prompt,
-            temperature, //: 1.0,
-            stop, //: ['[Start]'],
+            temperature,
+            stop,
         })
 
     } catch(error) {

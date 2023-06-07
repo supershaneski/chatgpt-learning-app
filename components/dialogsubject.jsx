@@ -12,7 +12,6 @@ import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
-import Divider from '@mui/material/Divider'
 import ClearIcon from '@mui/icons-material/Clear'
 
 import categoryList from '../assets/category.json'

@@ -5,7 +5,6 @@ import PropTypes from 'prop-types'
 
 import Button from '@mui/material/Button'
 import CircularProgress from '@mui/material/CircularProgress'
-//import CreateIcon from '@mui/icons-material/BorderColor'
 
 import classes from './dialogoutline.module.css'
 import captions from '../assets/captions.json'

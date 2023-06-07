@@ -4,7 +4,7 @@ import React from 'react'
 
 import PropTypes from 'prop-types'
 
-import Button from '@mui/material/Button'
+//import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/DeleteForever';
 
@@ -30,14 +30,6 @@ function CoursePanel({
         </div>
     )
 }
-
-/*
-<Button 
-                color='inherit'
-                sx={{ fontSize: '1rem', fontWeight: '400' }} 
-                onClick={onClick} 
-                startIcon={icon}>{ name }</Button>
-*/
 
 function CourseButton({
     name = '',

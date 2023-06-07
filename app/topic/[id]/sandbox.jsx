@@ -7,11 +7,10 @@ import { createPortal } from 'react-dom'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-//import FormLabel from '@mui/material/FormLabel';
+import Radio from '@mui/material/Radio'
+import RadioGroup from '@mui/material/RadioGroup'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import FormControl from '@mui/material/FormControl'
 
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
@@ -19,7 +18,6 @@ import TextField from '@mui/material/TextField'
 import InputAdornment from '@mui/material/InputAdornment'
 import ClearIcon from '@mui/icons-material/Clear'
 import SendIcon from '@mui/icons-material/Send'
-//import ChatIcon from '@mui/icons-material/ChatBubbleOutline'
 import QuizIcon from '@mui/icons-material/Quiz'
 import ChatIcon from '@mui/icons-material/Forum'
 import DeleteIcon from '@mui/icons-material/DeleteForever'
@@ -28,7 +26,6 @@ import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 
 import CreateIcon from '@mui/icons-material/BorderColor'
-//import CreateIcon from '@mui/icons-material/Create'
 import ResetIcon from '@mui/icons-material/RestartAlt'
 
 import SettingsIcon from '@mui/icons-material/Settings'
@@ -47,18 +44,16 @@ import { getSimpleId } from '../../../lib/utils'
 import captions from '../../../assets/captions.json'
 import useCaption from '../../../lib/usecaption'
 
-function getCategoryName(id) {
-    return categoryList.items.find((item) => item.id === id)?.name
-}
-
 import useDataStore from '../../../store/datastore'
 
 import classes from './sandbox.module.css'
 
+function getCategoryName(id) {
+    return categoryList.items.find((item) => item.id === id)?.name
+}
+
 const procQuiz = (quiz) => {
     
-    //console.log(quiz)
-
     let tokens = quiz.split('\n')
 
     let quizItems = []
@@ -71,7 +66,7 @@ const procQuiz = (quiz) => {
         if(!isNaN(quizno)) {
 
             if(index >= 0) {
-                // post-process previous item
+                
                 if(quizItems[index].choices.length > 1) {
                     quizItems[index].choices.pop()
                 }
@@ -90,16 +85,12 @@ const procQuiz = (quiz) => {
         }
     }
 
-    //console.log(quizItems)
-    
     if(quizItems[index].choices.length > 1) {
         quizItems[index].choices.pop()
     }
 
     // verify
     const errorFlag = quizItems[0].choices.length > 1 ? false : true
-
-    //console.log(quizItems, `error: ${errorFlag}`)
 
     return errorFlag ? null : quizItems
 
@@ -200,7 +191,7 @@ export default function Sandbox({ params, searchParams }) {
 
         const quiz = getQuiz(topicId)
         if(quiz && quiz.content.length > 0) {
-            //console.log(quiz)
+            
             const data = procQuiz(quiz.content)
             if(data) {
                 setQuizData(data)
@@ -257,7 +248,7 @@ export default function Sandbox({ params, searchParams }) {
 
         try {
 
-            const response = await fetch('/generate/', { // /quiz/
+            const response = await fetch('/generate/', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -669,9 +660,6 @@ export default function Sandbox({ params, searchParams }) {
                 <div className={classes.discussion}>
                     {
                         messageItems.length > 0 && messageItems.map((item) => {
-                            /*
-                            <div className={classes.close} onClick={handleDeleteMessage(item.gid)}>&#215;</div>
-                            */
                             return (
                                 <div key={item.id} className={classes.message}>
                                     <div className={classes.close}>
@@ -710,7 +698,6 @@ export default function Sandbox({ params, searchParams }) {
                             maxRows={6}
                             inputRef={inputRef}
                             value={inputText}
-                            //placeholder={setCaption('write-message')}
                             onChange={(e) => setInputText(e.target.value)}
                             inputProps={{
                                 className: classes.chatInput,
