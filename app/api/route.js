@@ -27,10 +27,19 @@ export async function POST(request) {
 
     let prev_data = previous
 
-    if(prev_data.length > 20) {
+    /**
+     * We need to manage the amount of previous data so that we don't hit
+     * the maxtoken limit. Also sending large amount of data is costly.
+     * Here, we are setting 20 entries as the cutoff.
+     */
 
-        let cutoff = Math.ceil(previous.length - 20)
+    const MAX_LENGTH = 20
 
+    if(prev_data.length > MAX_LENGTH) {
+
+        let cutoff = Math.ceil(previous.length - MAX_LENGTH)
+
+        // we want to maintain the entries as pair of user and assistant prompts
         cutoff = isEven(cutoff) ? cutoff : cutoff + 1
 
         prev_data = previous.slice(cutoff)
