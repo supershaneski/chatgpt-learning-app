@@ -2,7 +2,7 @@ import { textCompletion } from '../../services/openai'
 
 export async function POST(request) {
 
-    const { prompt } = await request.json()
+    const { prompt, temperature = 0.7, stop = '\n' } = await request.json()
     
     if (!prompt) {
         return new Response('Bad question', {
@@ -16,8 +16,8 @@ export async function POST(request) {
 
         text = await textCompletion({
             prompt,
-            temperature: 1.0,
-            stop: ['[Start]'],
+            temperature, //: 1.0,
+            stop, //: ['[Start]'],
         })
 
     } catch(error) {

@@ -1,14 +1,10 @@
 .container {
-    /*background-color: #f5f5f5;*/
     position: relative;
-    /*min-height: 100vh;*/
 }
 
 .header {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     background-color: #2a3451;
-    /*position: relative;
-    height: 260px;*/
     position: relative;
     padding: 0 1rem;
     box-sizing: border-box;
@@ -16,12 +12,6 @@
 .toolbar {
     position: relative;
     height: 60px;
-    /*background-color: #4447;*/
-    /*display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 1rem;
-    box-sizing: border-box;*/
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -29,29 +19,19 @@
 .banner {
     padding: 0 10px 2rem 10px;
     box-sizing: border-box;
-    /*position: relative;
-    height: 200px;
-    padding: 0 25px;
-    box-sizing: border-box;*/
-    /*
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 0 1rem;
-    box-sizing: border-box;*/
 }
 
 .headerTitle {
     margin: 0;
     color: #ffffff;
-    font-size: 2.2rem; /*1.8*/
+    font-size: 2.2rem;
     font-weight: 400;
     line-height: 140%;
     margin-bottom: 1rem;
 }
 .headerText {
     margin: 0;
-    font-size: 1.4rem; /*1*/
+    font-size: 1.4rem;
     font-weight: 400;
     color: #ffffff;
     margin-bottom: 2rem;

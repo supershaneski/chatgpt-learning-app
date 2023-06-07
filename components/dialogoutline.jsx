@@ -109,6 +109,8 @@ export default function DialogOutline({
                 },
                 body: JSON.stringify({
                     prompt,
+                    temperature: 1.0,
+                    stop: '[Start]',
                 })
             })
 

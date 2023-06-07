@@ -257,7 +257,7 @@ export default function Sandbox({ params, searchParams }) {
 
         try {
 
-            const response = await fetch('/quiz/', {
+            const response = await fetch('/generate/', { // /quiz/
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -265,6 +265,8 @@ export default function Sandbox({ params, searchParams }) {
                 },
                 body: JSON.stringify({
                     prompt,
+                    temprature: 0.7,
+                    stop: '[End]',
                 })
             })
 

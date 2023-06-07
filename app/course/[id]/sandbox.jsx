@@ -2,8 +2,6 @@
 
 import React from 'react'
 
-import Link from 'next/link'
-
 import { createPortal } from 'react-dom'
 
 import { useRouter } from 'next/navigation'
@@ -64,8 +62,7 @@ export default function Sandbox({
     const [openLoader, setOpenLoader] = React.useState(false)
 
     const [openOutline, setOpenOutline] = React.useState(false)
-    const [outline, setOutline] = React.useState('')
-
+    
     const [paramId, setParamId] = React.useState('')
 
     const [courseCategory, setCourseCategory] = React.useState('')
@@ -80,9 +77,6 @@ export default function Sandbox({
     const [defaultSubTopic, setDefaultSubTopic] = React.useState('')
 
     React.useEffect(() => {
-
-        //console.log(`params: ${params.id}`)
-        //console.log(`searchParams: ${searchParams}`)
 
         const id = params.id
 
@@ -228,66 +222,9 @@ export default function Sandbox({
 
     }
 
-    const handleGenerateOutline = async () => {
+    const handleGenerateOutline = () => {
 
         setOpenOutline(true)
-
-        /*
-        setOpenLoader(true)
-
-        try {
-
-            const prompt = `Write a sample course outline for the selected subject.\n` +
-                `Subject Title: ${courseName}\n` +
-                `Subject Description: ${courseDescription}\n` +
-                `Divide the outline in several sections.\n` +
-                `Write subtopics that is relevant under each section.\n` +
-                `Follow this sample format:\n` +
-                `I. Section title\n` +
-                `- Subtopic 1\n` +
-                `- Subtopic 2\n` +
-                `- Subtopic 3\n` +
-                `II. Section title\n` +
-                `- Subtopic 1\n` +
-                `- Subtopic 2\n` +
-                `- Subtopic 3\n` +
-                `III. Section title\n` +
-                `- Subtopic 1\n` +
-                `- Subtopic 2\n` +
-                `- Subtopic 3\n` +
-                `[Start]\n`
-
-            const response = await fetch('/generate/', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    prompt,
-                })
-            })
-
-            if(!response.ok) {
-                console.log('Oops, an error occurred', response.status)
-            }
-
-            const result = await response.json()
-
-            //console.log(result)
-
-            setOutline(result.text)
-
-            setOpenLoader(false)
-            setOutline(result.text)
-            setOpenOutline(true)
-
-        } catch(error) {
-            console.log(error)
-
-            setOpenLoader(false)
-        }
-        */
 
     }
 
@@ -398,20 +335,13 @@ export default function Sandbox({
                 openAddTopic && createPortal(
                     <DialogTopic
                     icon={topicDialogMode > 0 ? <EditIcon /> : <AddIcon />}
-                    //dialogTitle={topicDialogMode > 0 ? 'Edit Topic' : setCaption('add-topic')}
                     dialogTitle={setCaption(topicDialogMode > 0 ? 'edit-topic' : 'add-topic')}
                     buttonTitle={setCaption(topicDialogMode > 0 ? 'save' : 'add')}
-                    //buttonTitle={topicDialogMode > 0 ? 'Save' : 'Add'}
-                    //defaultCategory={courseCategory}
-                    //defaultName={courseName}
-                    //defaultDescription={courseDescription}
                     id={topicDialogMode > 0 ? defaultTopicId : ''}
                     defaultTopic={topicDialogMode > 0 ? defaultTopic : ''}
                     defaultSubTopic={topicDialogMode > 0 ? defaultSubTopic : ''}
                     onConfirm={handleAddTopic}
                     onClose={() => setOpenAddTopic(false)}
-                    //onDelete={() => {}}
-                    //isDeleteVisible={topicDialogMode > 0}
                     />,
                     document.body
                 )
@@ -432,7 +362,6 @@ export default function Sandbox({
             {
                 openOutline && createPortal(
                     <DialogOutline
-                    //data={outline}
                     courseName={courseName}
                     courseDescription={courseDescription}
                     isTopicExist={topicItems.length > 0}
