@@ -68,10 +68,10 @@ cd myproject
 npm install
 ```
 
-Copy `.env.example` and rename it to `.env` then edit the `OPENAI_APIKEY` and use your own `OpenAI API key`.
+Copy `.env.example` and rename it to `.env` then edit the `OPENAI_API_KEY` and use your own `OpenAI API key`.
 
 ```javascript
-OPENAI_APIKEY=YOUR_OWN_API_KEY
+OPENAI_API_KEY=YOUR_OWN_API_KEY
 ```
 
 Then run the app
